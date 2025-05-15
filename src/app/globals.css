@@ -24,3 +24,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+[contenteditable=true] {
+  &:empty:before {
+    content: attr(data-placeholder);
+    pointer-events: none;
+    display: block; /* For Firefox */
+    color: #888;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
