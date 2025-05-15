@@ -97,7 +97,7 @@ export default function Home() {
 
 
       {/* <button className="fixed bottom-10 right-10 mt-10 px-12 py-2 bg-[#3395F7] text-white rounded cursor-pointer hover:bg-[#3378f7] active:bg-[#3357f7]" style={{ letterSpacing: '0.01em' }} onClick={() => handleExport()}>Скачать ПДФ</button> */}
-      <button className="fixed bottom-4 right-4 px-8 py-2 bg-[#3395F7] text-white rounded cursor-pointer hover:bg-[#3378f7] active:bg-[#3357f7]" style={{ letterSpacing: '0.01em' }} onClick={() => convert()}>Скачать PNG</button>
+      <button className="fixed bottom-4 right-4 px-8 py-2 bg-[#3395F7] text-white rounded cursor-pointer hover:bg-[#3378f7] active:bg-[#3357f7]" style={{ letterSpacing: '0.01em' }} onClick={() => convert()}>Скачать ПНГ</button>
     </div>
   </>
 }
