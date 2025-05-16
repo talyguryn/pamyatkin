@@ -1,6 +1,6 @@
  # syntax=docker/dockerfile:1
  # Build stage: install dependencies and build the Next.js app
- FROM node:20-slim AS builder
+ FROM node:22-slim AS builder
  WORKDIR /app
 
  # Install dependencies
@@ -14,7 +14,7 @@
  RUN npm run build
 
  # Production stage: minimal image to run the app
- FROM node:20-slim AS runner
+ FROM node:22-slim AS runner
  WORKDIR /app
  ENV NODE_ENV=production
 
