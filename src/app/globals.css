@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
@@ -22,10 +22,11 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: Arial;
 }
 
-[contenteditable=true] {
+[contenteditable='true'] {
   &:empty:before {
     content: attr(data-placeholder);
     pointer-events: none;
@@ -37,4 +38,3 @@ body {
     outline: none;
   }
 }
-
