@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { JSX } from 'react';
 
 interface TextBlockProps {
   tag: keyof JSX.IntrinsicElements;
@@ -34,18 +34,18 @@ export default function TextBlock({
       suppressContentEditableWarning
       data-placeholder={placeholder}
       onInput={handleInput}
-      onPaste={(e) => {
-      e.preventDefault();
-      const text = e.clipboardData.getData('text/plain').replace(/\r?\n/g, ' ');
-      document.execCommand('insertText', false, text);
-      onChange(text);
+      onPaste={(e: React.ClipboardEvent<HTMLElement>) => {
+        e.preventDefault();
+        const text = e.clipboardData.getData('text/plain').replace(/\r?\n/g, ' ');
+        document.execCommand('insertText', false, text);
+        onChange(text);
       }}
     >
       {value.split('\n').map((line, index) => (
-      <p key={index} className="m-0">
-        {line}
-        {index < value.split('\n').length - 1 && <br />}
-      </p>
+        <p key={index} className="m-0">
+          {line}
+          {index < value.split('\n').length - 1 && <br />}
+        </p>
       ))}
     </Tag>
   );

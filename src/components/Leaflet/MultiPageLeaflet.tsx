@@ -89,7 +89,7 @@ const MultiPageLeaflet = forwardRef<MultiPageLeafletHandle, MultiPageLeafletProp
           }}
         >
           {blocks.map((block, i) => (
-            <div key={i} ref={(el) => (blockRefs.current[i] = el)}>
+            <div key={i} ref={(el) => { blockRefs.current[i] = el; }}>
               {block}
             </div>
           ))}
