@@ -31,7 +31,7 @@ body {
     content: attr(data-placeholder);
     pointer-events: none;
     display: block; /* For Firefox */
-    color: #888;
+    color: #828282;
   }
 
   &:focus {
