@@ -14,7 +14,7 @@ export default function Home() {
   // Content state
   const [image, setImage] = useState<string | null>("/cat.png");
 
-  const [title, setTitle] = useState('Уход за питомцем');
+  const [title, setTitle] = useState('Инструкция\nпо уходу');
   const [petName, setPetName] = useState('');
   const [description, setDescription] = useState('');
   const [firstDayTitle, setFirstDayTitle] = useState('Помогите обустроиться');
