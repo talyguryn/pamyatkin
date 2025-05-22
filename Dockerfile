@@ -12,7 +12,6 @@
 
  # Build the Next.js application
  RUN npm run build
- RUN npm prune --production
 
  # Production stage: minimal image to run the app
  FROM node:22-slim AS runner
