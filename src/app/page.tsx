@@ -12,7 +12,7 @@ import {
 export default function Home() {
   const leafletRef = useRef<MultiPageLeafletHandle>(null);
   // Content state
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>("/cat.png");
 
   const [title, setTitle] = useState('Уход за питомцем');
   const [petName, setPetName] = useState('');
