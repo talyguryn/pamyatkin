@@ -20,7 +20,7 @@ export default function ImageBlock({ image, onImageChange, className }: ImageBlo
 
   return (
     <div
-      className={`bg-gray-100 flex items-center justify-center cursor-pointer group overflow-hidden ${className}`}
+      className={`bg-gray-100 border-2 border-stone-200 border-dashed flex items-center justify-center cursor-pointer group overflow-hidden hover:border-none ${className}`}
       onClick={handleClick}
     >
       <div
@@ -33,7 +33,7 @@ export default function ImageBlock({ image, onImageChange, className }: ImageBlo
       >
         <span
           className={
-            `text-gray-700 text-xs bg-gray-100 group-hover:bg-gray-200 w-full h-full flex text-center items-center justify-center transition-opacity duration-200 ${
+            `text-gray-700 text-xs bg-gray-100 group-hover:bg-gray-200 w-full group-active:bg-gray-300 h-full flex text-center items-center justify-center transition-opacity duration-200 ${
               !image ? 'opacity-100' : 'opacity-0 group-hover:opacity-90'
             }`
           }

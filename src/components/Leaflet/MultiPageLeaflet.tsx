@@ -105,10 +105,10 @@ const MultiPageLeaflet = forwardRef<MultiPageLeafletHandle, MultiPageLeafletProp
               // height: `${PAGE_HEIGHT_MM}mm`,
               height: `842px`,
               background: 'white',
-              boxShadow: '0 0 5px rgba(0,0,0,0.3)',
+              boxShadow: '0px 10px 31px 0px rgba(4, 46, 67, 5%), 0px 5.9px 16.2px 0px rgba(4, 46, 67, 4%), 0px 3px 7.6px 0px rgba(4, 46, 67, 3%), 0px 1.2px 3.3px 0px rgba(4, 46, 67, 2%), 0px 0.3px 1.4px 0px rgba(4, 46, 67, 1%)',
               margin: '20px auto',
               // padding: `${PAD_TOP_MM}mm ${PAD_X_MM}mm ${PAD_BOTTOM_MM}mm`,
-              padding: `32px 40px 32px 28px`,
+              padding: `32px 28px 24px 28px`,
               boxSizing: 'border-box',
               overflow: 'hidden',
             }}
