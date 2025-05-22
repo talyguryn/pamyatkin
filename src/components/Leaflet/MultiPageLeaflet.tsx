@@ -104,14 +104,12 @@ const MultiPageLeaflet = forwardRef<MultiPageLeafletHandle, MultiPageLeafletProp
               width: `595px`,
               // height: `${PAGE_HEIGHT_MM}mm`,
               height: `842px`,
-              background: 'white',
-              boxShadow: '0px 10px 31px 0px rgba(4, 46, 67, 5%), 0px 5.9px 16.2px 0px rgba(4, 46, 67, 4%), 0px 3px 7.6px 0px rgba(4, 46, 67, 3%), 0px 1.2px 3.3px 0px rgba(4, 46, 67, 2%), 0px 0.3px 1.4px 0px rgba(4, 46, 67, 1%)',
-              margin: '20px auto',
+
               // padding: `${PAD_TOP_MM}mm ${PAD_X_MM}mm ${PAD_BOTTOM_MM}mm`,
-              padding: `32px 28px 24px 28px`,
               boxSizing: 'border-box',
               overflow: 'hidden',
             }}
+            className={`bg-white my-20 pt-[32px] px-[28px] pb-[24px] shadow-2xl shadow-[#3e668861]`}
           >
             {idxs.map((i) => (
               <React.Fragment key={i}>{blocks[i]}</React.Fragment>

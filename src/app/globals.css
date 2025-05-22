@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
@@ -26,9 +26,7 @@ body {
   font-family: Arial;
 }
 
-[contenteditable="true"] {
-  outline: olivedrab;
-
+[contenteditable='true'] {
   &:empty:before {
     content: attr(data-placeholder);
     pointer-events: none;
