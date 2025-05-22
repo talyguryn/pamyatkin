@@ -20,7 +20,7 @@ export default function ImageBlock({ image, onImageChange, className }: ImageBlo
 
   return (
     <div
-      className={`bg-gray-100 border-2 border-stone-200 border-dashed flex items-center justify-center cursor-pointer group overflow-hidden hover:border-none ${className}`}
+      className={`bg-gray-100 ${!image && 'border-dashed border-1 border-stone-200'} flex items-center justify-center cursor-pointer group overflow-hidden hover:border-none ${className}`}
       onClick={handleClick}
     >
       <div
@@ -38,7 +38,7 @@ export default function ImageBlock({ image, onImageChange, className }: ImageBlo
             }`
           }
         >
-          {`Добавьте изображение`}
+          {`Добавьте фотографию`}
         </span>
       </div>
       <input

@@ -1,8 +1,8 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
 }
 
 @theme inline {
@@ -26,12 +26,13 @@ body {
   font-family: Arial;
 }
 
-[contenteditable='true'] {
+[contenteditable="true"] {
+  outline: olivedrab;
+
   &:empty:before {
     content: attr(data-placeholder);
     pointer-events: none;
     display: block; /* For Firefox */
-    color: black;
   }
 
   &:focus {
