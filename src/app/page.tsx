@@ -111,7 +111,7 @@ export default function Home() {
             )
           }
         >
-          Скачать ПДФ
+          Скачать PDF
         </button>
         {/* <button
           className="px-8 py-2 bg-[#3395F7] text-white rounded hover:bg-[#3378f7] active:bg-[#3357f7]"
