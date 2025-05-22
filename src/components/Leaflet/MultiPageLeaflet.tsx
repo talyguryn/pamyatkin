@@ -98,7 +98,7 @@ const MultiPageLeaflet = forwardRef<MultiPageLeafletHandle, MultiPageLeafletProp
         {pages.map((idxs, pi) => (
           <div
             key={pi}
-            className="leaflet-page"
+            className="leaflet-page bg-white my-20 pt-[32px] px-[28px] pb-[24px] shadow-2xl shadow-[#3e668861]"
             style={{
               // width: `${PAGE_WIDTH_MM}mm`,
               width: `595px`,
@@ -109,7 +109,6 @@ const MultiPageLeaflet = forwardRef<MultiPageLeafletHandle, MultiPageLeafletProp
               boxSizing: 'border-box',
               overflow: 'hidden',
             }}
-            className={`bg-white my-20 pt-[32px] px-[28px] pb-[24px] shadow-2xl shadow-[#3e668861]`}
           >
             {idxs.map((i) => (
               <React.Fragment key={i}>{blocks[i]}</React.Fragment>
