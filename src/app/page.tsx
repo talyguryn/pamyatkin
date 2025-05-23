@@ -10,6 +10,8 @@ import {
 } from '../utils/export';
 
 export default function Home() {
+  const latestCommitDate = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_DATETIME;
+
   const leafletRef = useRef<MultiPageLeafletHandle>(null);
   // Content state
   const [image, setImage] = useState<string | null>("/cat.png");
@@ -124,6 +126,16 @@ export default function Home() {
         >
           Скачать ПНГ (по страницам)
         </button> */}
+      </div>
+
+      <div className="fixed bottom-0 left-0 p-2 text-transparent hover:text-gray-400">
+        <p className="text-sm">
+          {latestCommitDate && (
+            <span>
+              {new Date(latestCommitDate).toLocaleString('ru-RU')}
+            </span>
+          )}
+        </p>
       </div>
     </div>
   );
