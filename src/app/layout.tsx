@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <head>
-        <link rel="icon" href="/icon.png?v=1" type="image/png" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
       </head>
       <body className="antialiased">{children}</body>
     </html>
