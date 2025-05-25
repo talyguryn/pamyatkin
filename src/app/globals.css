@@ -15,8 +15,8 @@ body {
   &:empty:before {
     content: attr(data-placeholder);
     pointer-events: none;
-    display: block; /* For Firefox */
-    color: #a0a0a0; /* Placeholder color */
+    display: block;
+    color: #a0a0a0;
   }
 
   &:focus {
