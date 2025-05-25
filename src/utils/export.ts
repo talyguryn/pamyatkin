@@ -56,8 +56,8 @@ export async function exportToPdf(
     const pdfWindow = window.open(pdfUrl, '_blank');
     if (pdfWindow) {
       pdfWindow.focus();
-    } else {
-      alert('Пожалуйста, разрешите всплывающие окна для этого сайта.');
+      // } else {
+      //   alert('Пожалуйста, разрешите всплывающие окна для этого сайта.');
     }
   }
 }
