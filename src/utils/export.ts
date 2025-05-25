@@ -1,46 +1,58 @@
-import html2canvas from 'html2canvas-pro';
-import { jsPDF } from 'jspdf';
+const { jsPDF } = await import('jspdf');
+const html2canvas = (await import('html2canvas-pro')).default;
 
-/**
- * Export an array of HTMLElements as individual PNG files, one per element.
- * @param elements - array of elements to export
- * @param fileNamePrefix - prefix for downloaded file names (default: 'page')
- */
-export async function exportElementsToPngPages(
-  elements: HTMLElement[],
-  fileNamePrefix: string = 'page',
-): Promise<void> {
-  for (let i = 0; i < elements.length; i++) {
-    const el = elements[i];
-    const canvas = await html2canvas(el, { scale: 2, useCORS: true });
-    const imgData = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.download = `${fileNamePrefix}-${i + 1}.png`;
-    link.href = imgData;
-    link.click();
+export async function exportToPdf(element: HTMLElement | null) {
+  if (!element) {
+    alert('Leaflet element not found!');
+    return;
   }
-}
 
-/**
- * Export an array of HTMLElements as a multi-page PDF.
- * @param elements - array of elements to export as pages
- * @param fileName - name of the generated PDF file (default: 'document.pdf')
- * @param widthMM - page width in millimeters (default: 210)
- * @param heightMM - page height in millimeters (default: 297)
- */
-export async function exportElementsToPdfPages(
-  elements: HTMLElement[],
-  fileName: string = 'document.pdf',
-  widthMM: number = 210,
-  heightMM: number = 297,
-): Promise<void> {
-  const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
-  for (let i = 0; i < elements.length; i++) {
-    const el = elements[i];
-    const canvas = await html2canvas(el, { scale: 2, useCORS: true });
-    const imgData = canvas.toDataURL('image/jpeg', 1.0);
-    if (i > 0) pdf.addPage();
-    pdf.addImage(imgData, 'JPEG', 0, 0, widthMM, heightMM);
+  const canvas = await html2canvas(element, {
+    scale: 4,
+    useCORS: true,
+    onclone: (clonedDoc) => {
+      // Ensure the cloned document has the same styles as the original
+      // const styleSheets = document.styleSheets;
+      // for (let i = 0; i < styleSheets.length; i++) {
+      //   const styleSheet = styleSheets[i];
+      //   if (styleSheet.cssRules) {
+      //     for (let j = 0; j < styleSheet.cssRules.length; j++) {
+      //       const rule = styleSheet.cssRules[j];
+      //       if (rule instanceof CSSStyleRule) {
+      //         clonedDoc.styleSheets[0].insertRule(
+      //           rule.cssText,
+      //           clonedDoc.styleSheets[0].cssRules.length
+      //         );
+      //       }
+      //     }
+      //   }
+      // }
+
+      // Hide elements with data-hideOnExport attribute
+      const elements = clonedDoc.querySelectorAll('[data-hideOnExport]');
+      elements.forEach((el) => {
+        (el as HTMLElement).style.display = 'none';
+      });
+    },
+  });
+
+  const imgData = canvas.toDataURL('image/png');
+  const pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'px',
+    format: [595, 842], // A4 size in pixels at 72 DPI
+  });
+
+  pdf.addImage(imgData, 'PNG', 0, 0, 595, 842);
+  // pdf.save('leaflet.pdf'); // Uncomment this line to save the PDF directly
+
+  // open pdf in the new tab
+  const pdfBlob = pdf.output('blob');
+  const pdfUrl = URL.createObjectURL(pdfBlob);
+  const pdfWindow = window.open(pdfUrl, '_blank');
+  if (pdfWindow) {
+    pdfWindow.focus();
+  } else {
+    alert('Please allow popups for this website');
   }
-  pdf.save(fileName);
 }
