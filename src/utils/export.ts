@@ -54,6 +54,7 @@ export async function exportToPdf(
     const pdfBlob = pdf.output('blob');
     const pdfUrl = URL.createObjectURL(pdfBlob);
     const pdfWindow = window.open(pdfUrl, '_blank');
+
     if (pdfWindow) {
       pdfWindow.focus();
       // } else {
