@@ -265,9 +265,17 @@ export default function Home() {
 
       <div className="fixed bottom-4 right-4 flex flex-col gap-2">
         <button
-          className="px-8 py-2 bg-[#3395F7] text-white rounded hover:bg-[#3378f7] active:bg-[#3357f7] cursor-pointer"
+          className="px-8 py-2 bg-white text-[#3395F7] rounded hover:bg-[#f3f9ff] active:bg-[#ebf5ff] cursor-pointer"
           onClick={() => {
             exportToPdf(document.getElementById('leaflet'));
+          }}
+        >
+          Показать PDF
+        </button>
+        <button
+          className="px-8 py-2 bg-[#3395F7] text-white rounded hover:bg-[#3378f7] active:bg-[#3357f7] cursor-pointer"
+          onClick={() => {
+            exportToPdf(document.getElementById('leaflet'), true);
           }}
         >
           Скачать PDF

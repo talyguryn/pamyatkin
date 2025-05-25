@@ -1,7 +1,10 @@
 const { jsPDF } = await import('jspdf');
 const html2canvas = (await import('html2canvas-pro')).default;
 
-export async function exportToPdf(element: HTMLElement | null) {
+export async function exportToPdf(
+  element: HTMLElement | null,
+  download = false
+) {
   if (!element) {
     alert('Leaflet element not found!');
     return;
@@ -44,15 +47,17 @@ export async function exportToPdf(element: HTMLElement | null) {
   });
 
   pdf.addImage(imgData, 'PNG', 0, 0, 595, 842);
-  // pdf.save('leaflet.pdf'); // Uncomment this line to save the PDF directly
 
-  // open pdf in the new tab
-  const pdfBlob = pdf.output('blob');
-  const pdfUrl = URL.createObjectURL(pdfBlob);
-  const pdfWindow = window.open(pdfUrl, '_blank');
-  if (pdfWindow) {
-    pdfWindow.focus();
+  if (download) {
+    pdf.save('Памятка.pdf');
   } else {
-    alert('Please allow popups for this website');
+    const pdfBlob = pdf.output('blob');
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    const pdfWindow = window.open(pdfUrl, '_blank');
+    if (pdfWindow) {
+      pdfWindow.focus();
+    } else {
+      alert('Пожалуйста, разрешите всплывающие окна для этого сайта.');
+    }
   }
 }
