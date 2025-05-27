@@ -13,6 +13,37 @@ export default function Home() {
     });
   }, []);
 
+  // function to change the image source by clicking on it and selecting file
+  const handleImageClick = (clickEvent: React.MouseEvent<HTMLImageElement>) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/png, image/jpeg';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+
+      if (!file) return;
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const img = event.target?.result as string;
+        const buttonElement = clickEvent.target as HTMLImageElement;
+        const containerElement = buttonElement.closest('.group') as HTMLElement;
+        const imageElement = containerElement.querySelector('img');
+
+        if (!imageElement) return;
+
+        imageElement.src = img; // Update the image source
+
+        imageElement.classList.remove('hidden'); // Show the image
+        containerElement.querySelector('div')?.classList.add('hidden');
+        containerElement.querySelector('div')?.classList.remove('flex');
+      };
+      reader.readAsDataURL(file);
+      input.remove();
+    };
+    input.click();
+  };
+
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
       {/* leaflet */}
@@ -51,7 +82,13 @@ export default function Home() {
           }}
         >
           <div
-            style={{ fontWeight: 'bold', fontSize: '32px', lineHeight: '1' }}
+            style={{
+              fontWeight: 'bold',
+              fontSize: '32px',
+              lineHeight: '1',
+              width: '380px',
+              height: 'auto',
+            }}
             contentEditable
             suppressContentEditableWarning
             data-placeholder="Заголовок инструкции"
@@ -60,11 +97,29 @@ export default function Home() {
             <br />
             по уходу
           </div>
-          <img
+          <div
             style={{ width: '125px', height: '125px' }}
-            src="/cat.png"
-            alt="Cat"
-          />
+            className="flex-shrink-0 group relative hover:cursor-pointer"
+            onClick={handleImageClick}
+          >
+            <img
+              className="hidden"
+              style={{
+                objectFit: 'cover',
+                width: '100%',
+                height: '100%',
+              }}
+              src="/cat.png"
+              alt="Cat"
+            />
+            <div className="flex group-hover:flex text-center absolute w-full h-full top-0 items-center justify-center bg-[#ffffffbb] outline outline-dashed outline-[#3e668832] hover:outline-[#3e668861] backdrop-blur-xs">
+              <span className="text-xs text-[#3e6688]">
+                Фотография
+                <br />
+                питомца
+              </span>
+            </div>
+          </div>
         </div>
         <div
           style={{
@@ -256,9 +311,7 @@ export default function Home() {
               contentEditable
               suppressContentEditableWarning
               data-placeholder="Имя питомца"
-            >
-              Янус
-            </div>
+            ></div>
           </div>
         </div>
       </div>
