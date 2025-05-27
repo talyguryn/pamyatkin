@@ -45,7 +45,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100 mb-20">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
       {/* leaflet */}
       <div
         className="bg-white mt-20 mb-[470px] pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] h-[842px] relative"
@@ -318,7 +318,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="text-xs text-center text-gray-500 mt-4 mb-8">
+      <div className="text-xs text-center text-gray-500 mt-20 mb-8">
         Сделано в 
         <a href="https://bureau.ru/school/" target="_blank">
           Школе Бюро
