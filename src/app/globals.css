@@ -37,7 +37,7 @@ a {
   text-decoration-color: #0000003b;
 
   &:hover {
-    text-decoration-color: #000000;
+    text-decoration-color: inherit;
   }
 }
 
