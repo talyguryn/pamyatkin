@@ -320,11 +320,9 @@ export default function Home() {
       </div>
 
       <div className="text-xs text-center text-gray-500 mt-20 mb-8">
-        Сделано в 
         <a href="https://bureau.ru/school/" target="_blank">
-          Школе Бюро
-        </a>{' '}
-        в 2025 году
+          Сделано в Школе Бюро в 2025 году.
+        </a>
       </div>
 
       <div className="fixed bottom-4 right-4 flex flex-col gap-2">
