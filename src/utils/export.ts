@@ -1,6 +1,8 @@
 const { jsPDF } = await import('jspdf');
 const html2canvas = (await import('html2canvas-pro')).default;
 
+const SCALE = 2; // Scale factor for high DPI rendering
+
 export async function exportToPdf(
   element: HTMLElement | null,
   download = false,
@@ -12,7 +14,7 @@ export async function exportToPdf(
   }
 
   const canvas = await html2canvas(element, {
-    scale: 4,
+    scale: SCALE,
     useCORS: true,
     onclone: (clonedDoc) => {
       // Ensure the cloned document has the same styles as the original
@@ -55,14 +57,58 @@ export async function exportToPdf(
   });
 
   const imgData = canvas.toDataURL('image/png');
+
+  const pageWidth = canvas.width;
+  const pageHeight = canvas.width / (595 / 842); // A4 aspect ratio
+
   const pdf = new jsPDF({
     orientation: 'portrait',
     unit: 'px',
-    format: [595, 842], // A4 size in pixels at 72 DPI
+    // format: [595 * SCALE, 842 * SCALE], // A4 size in pixels at 72 DPI
+    format: [pageWidth, pageHeight],
     compress: true,
   });
 
-  pdf.addImage(imgData, 'PNG', 0, 0, 595, 842);
+  const imgWidth = canvas.width;
+  const imgHeight = canvas.height;
+  const totalPages = Math.ceil(imgHeight / pageHeight);
+
+  console.log(`Total pages: ${totalPages}`);
+  console.log(`Image dimensions: ${imgWidth}x${imgHeight}`);
+  console.log(`Page dimensions: ${pageWidth}x${pageHeight}`);
+
+  let currentPage = 0;
+  while (currentPage < totalPages) {
+    const pageCanvas = document.createElement('canvas');
+    pageCanvas.width = pageWidth;
+    pageCanvas.height = pageHeight;
+    const ctx = pageCanvas.getContext('2d');
+    if (!ctx) {
+      console.error('Failed to get canvas context');
+      return;
+    }
+    const sourceY = currentPage * pageHeight;
+    ctx.drawImage(
+      canvas,
+      0,
+      sourceY,
+      imgWidth,
+      Math.min(pageHeight, imgHeight - sourceY),
+      0,
+      0,
+      pageWidth,
+      Math.min(pageHeight, imgHeight - sourceY)
+    );
+
+    // Convert the canvas to an image and add it to the PDF
+
+    const pageImgData = pageCanvas.toDataURL('image/png');
+    if (currentPage > 0) {
+      pdf.addPage();
+    }
+    pdf.addImage(pageImgData, 'PNG', 0, 0, pageWidth, pageHeight);
+    currentPage++;
+  }
 
   if (download) {
     pdf.save(fileName + '.pdf');
