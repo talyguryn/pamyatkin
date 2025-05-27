@@ -90,8 +90,8 @@ export default function Home() {
               lineHeight: '1',
               width: '380px',
             }}
-            contentEditable
-            suppressContentEditableWarning
+            // contentEditable
+            // suppressContentEditableWarning
             data-placeholder="Заголовок памятки"
           >
             Инструкция
