@@ -44,6 +44,18 @@ export default function Home() {
     input.click();
   };
 
+  // on load focus on the data-focus element
+  React.useEffect(() => {
+    const focusElement = document.querySelector('[data-focus]');
+    if (focusElement) {
+      (focusElement as HTMLElement).focus();
+      (focusElement as HTMLElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
       {/* leaflet */}
@@ -168,6 +180,7 @@ export default function Home() {
                 contentEditable
                 suppressContentEditableWarning
                 data-placeholder="Убрать провода, закрыть окна, убрать цветы с пола, опасные и мелкие предметы . Это поможет питомцу не пораниться и не отравиться. Не пускаейте питомка на диван и кровать, чтобы он не мог оттуда упать."
+                data-focus
               >
                 {/* <div>
                   Первые 2–3 дня нужно ограничить пространство одной комнатой.
