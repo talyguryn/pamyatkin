@@ -17,7 +17,7 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
       {/* leaflet */}
       <div
-        className="bg-white my-20 mb-[600px] pt-[32px] px-[28px] pb-[24px] shadow-2xl shadow-[#3e668861] w-[595px] h-[842px] relative"
+        className="bg-white my-20 mb-[600px] pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] h-[842px] relative"
         id="leaflet"
         style={{
           fontFamily: 'Arial, sans-serif',
@@ -33,7 +33,7 @@ export default function Home() {
             position: 'absolute',
             left: 'auto',
             right: '12px',
-            bottom: '20px',
+            bottom: '34px',
             color: '#B4B4B4',
             fontSize: '7px',
             transform: 'translateX(100%) rotate(-90deg) ',
