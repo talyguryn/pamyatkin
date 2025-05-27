@@ -34,7 +34,7 @@ a {
   text-decoration: underline;
   text-decoration-thickness: 0.01em;
   text-underline-offset: 0.5em;
-  text-decoration-color: #0000003b;
+  text-decoration-color: #6a728233;
 
   &:hover {
     text-decoration-color: inherit;
