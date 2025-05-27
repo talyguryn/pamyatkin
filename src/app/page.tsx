@@ -48,7 +48,7 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
       {/* leaflet */}
       <div
-        className="bg-white mt-20 mb-[470px] pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] h-[842px] relative"
+        className="bg-white mt-20 mb-[470px] pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] h-min-[842px] relative"
         id="leaflet"
         style={{
           fontFamily: 'Arial, sans-serif',
@@ -123,7 +123,8 @@ export default function Home() {
           </div>
         </div>
         <div
-          className="overflow-y-hidden"
+          className=""
+          // className="overflow-y-hidden"
           style={{
             display: 'flex',
             justifyContent: 'space-between',
