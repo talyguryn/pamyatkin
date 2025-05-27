@@ -59,6 +59,7 @@ export async function exportToPdf(
     orientation: 'portrait',
     unit: 'px',
     format: [595, 842], // A4 size in pixels at 72 DPI
+    compress: true,
   });
 
   pdf.addImage(imgData, 'PNG', 0, 0, 595, 842);
