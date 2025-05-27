@@ -3,7 +3,8 @@ const html2canvas = (await import('html2canvas-pro')).default;
 
 export async function exportToPdf(
   element: HTMLElement | null,
-  download = false
+  download = false,
+  fileName = 'Памятка (pamyatkin.ru)'
 ) {
   if (!element) {
     alert('Leaflet element not found!');
@@ -31,10 +32,24 @@ export async function exportToPdf(
       //   }
       // }
 
-      // Hide elements with data-hideOnExport attribute
-      const elements = clonedDoc.querySelectorAll('[data-hideOnExport]');
+      // Hide elements with data-hide-on-export attribute
+      const elements = clonedDoc.querySelectorAll('[data-hide-on-export]');
       elements.forEach((el) => {
         (el as HTMLElement).style.display = 'none';
+      });
+
+      // Show elements with data-show-on-export attribute
+      const showElements = clonedDoc.querySelectorAll('[data-show-on-export]');
+      showElements.forEach((el) => {
+        (el as HTMLElement).style.display = 'block';
+      });
+
+      // remove border and paddings from all contenteditable elements
+      const contentEditableElements =
+        clonedDoc.querySelectorAll('[contenteditable]');
+      contentEditableElements.forEach((el) => {
+        (el as HTMLElement).style.border = 'none';
+        (el as HTMLElement).style.padding = '0';
       });
     },
   });
@@ -49,7 +64,7 @@ export async function exportToPdf(
   pdf.addImage(imgData, 'PNG', 0, 0, 595, 842);
 
   if (download) {
-    pdf.save('Памятка.pdf');
+    pdf.save(fileName + '.pdf');
   } else {
     const pdfBlob = pdf.output('blob');
     const pdfUrl = URL.createObjectURL(pdfBlob);
@@ -57,8 +72,6 @@ export async function exportToPdf(
 
     if (pdfWindow) {
       pdfWindow.focus();
-      // } else {
-      //   alert('Пожалуйста, разрешите всплывающие окна для этого сайта.');
     }
   }
 }

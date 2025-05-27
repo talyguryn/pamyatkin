@@ -20,12 +20,24 @@ body {
     content: attr(data-placeholder);
     pointer-events: none;
     display: block; /* For Firefox */
-    color: #a0a0a0; /* Placeholder color */
+    color: #bcbcbc; /* Placeholder color */
   }
 
   &:focus {
     outline: none;
     border: 0.5px solid #c7c7c7;
+  }
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 0.01em;
+  text-underline-offset: 0.5em;
+  text-decoration-color: #0000003b;
+
+  &:hover {
+    text-decoration-color: #000000;
   }
 }
 

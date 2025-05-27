@@ -45,10 +45,10 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100 mb-20">
       {/* leaflet */}
       <div
-        className="bg-white my-20 mb-[600px] pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] h-[842px] relative"
+        className="bg-white mt-20 mb-[470px] pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] h-[842px] relative"
         id="leaflet"
         style={{
           fontFamily: 'Arial, sans-serif',
@@ -70,7 +70,9 @@ export default function Home() {
             transform: 'translateX(100%) rotate(-90deg) ',
             transformOrigin: 'left',
             whiteSpace: 'nowrap',
+            display: 'none',
           }}
+          data-show-on-export
         >
           Создано в «Памяткине», pamyatkin.ru
         </div>
@@ -87,11 +89,10 @@ export default function Home() {
               fontSize: '32px',
               lineHeight: '1',
               width: '380px',
-              height: 'auto',
             }}
             contentEditable
             suppressContentEditableWarning
-            data-placeholder="Заголовок инструкции"
+            data-placeholder="Заголовок памятки"
           >
             Инструкция
             <br />
@@ -112,7 +113,7 @@ export default function Home() {
               src="/cat.png"
               alt="Cat"
             />
-            <div className="flex group-hover:flex text-center absolute w-full h-full top-0 items-center justify-center bg-[#ffffffbb] outline outline-dashed outline-[#3e668832] hover:outline-[#3e668861] backdrop-blur-xs">
+            <div className="flex group-hover:flex text-center absolute w-full h-full top-0 items-center justify-center bg-[#ffffffbb] border border-dashed border-[#3e668832] hover:border-[#3e668861] backdrop-blur-xs">
               <span className="text-xs text-[#3e6688]">
                 Фотография
                 <br />
@@ -301,7 +302,7 @@ export default function Home() {
                 borderRadius: '4px',
                 cursor: 'pointer',
               }}
-              data-hideOnExport
+              data-hide-on-export
             >
               + Добавить блок
             </div> */}
@@ -315,6 +316,14 @@ export default function Home() {
             ></div>
           </div>
         </div>
+      </div>
+
+      <div className="text-xs text-center text-gray-500 mt-4 mb-8">
+        Сделано в 
+        <a href="https://bureau.ru/school/" target="_blank">
+          Школе Бюро
+        </a>{' '}
+        в 2025 году
       </div>
 
       <div className="fixed bottom-4 right-4 flex flex-col gap-2">
