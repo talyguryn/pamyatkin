@@ -122,6 +122,7 @@ export default function Home() {
           </div>
         </div>
         <div
+          className="overflow-y-hidden"
           style={{
             display: 'flex',
             justifyContent: 'space-between',
