@@ -381,7 +381,7 @@ export default function Home() {
 
       <div className="text-xs text-center text-gray-500 mt-20 mb-8">
         <a href="https://bureau.ru/school/" target="_blank">
-          Сделано в Школе Бюро в 2025 году.
+          Сделано в Школе Бюро Горбунова в 2025 году.
         </a>
       </div>
 
