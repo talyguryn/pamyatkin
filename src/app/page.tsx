@@ -3,15 +3,63 @@ import React from 'react';
 
 import { exportToPdf } from '@/utils/export';
 
+import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
+
+const defaultLeafletData: LeafletData = {
+  title: { value: 'Инструкция по уходу', placeholder: 'Введите заголовок' },
+  petName: { value: 'Имя питомца', placeholder: 'Введите имя питомца' },
+  imageSrc: '/cat.png',
+  sections: [
+    {
+      title: {
+        value: 'Как сделать дом безопасным',
+        placeholder: 'Введите заголовок секции',
+      },
+      content: {
+        value: '',
+        placeholder:
+          'Убрать провода, закрыть окна, убрать цветы с пола, опасные и мелкие предметы. Это поможет питомцу не пораниться и не отравиться. Не пускайте питомца на диван и кровать, чтобы он не мог оттуда упасть.',
+      },
+    },
+    {
+      title: {
+        value: 'Как помочь обустроиться в доме',
+        placeholder: 'Введите заголовок секции',
+      },
+      content: {
+        value: '',
+        placeholder:
+          'Лежанка, когтеточка, игрушки, туалет и тихое место для отдыха. Это поможет питомцу адаптироваться к новому дому.',
+      },
+    },
+    {
+      title: {
+        value: 'Чем кормить питомца',
+        placeholder: 'Введите заголовок секции',
+      },
+      content: {
+        value: '',
+        placeholder:
+          'Вода и сухой корм всегда должны быть в доступе. Первые пару дней он может плохо кушать или даже не кушать совсем. Не пугайтесь, такое бывает в первые дни — он покушает ночью, когда все будут спать. Потом все наладится.',
+      },
+    },
+    {
+      title: {
+        value: 'Какие прививки делать',
+        placeholder: 'Введите заголовок секции',
+      },
+      content: {
+        value: '',
+        placeholder:
+          'Например, через 3 месяца после первой прививки. Это поможет питомцу защититься от инфекций и болезней. До второй прививки не гуляйте с питомцем на улице, чтобы он не подхватил инфекцию.',
+      },
+    },
+  ],
+};
+
 export default function Home() {
-  // on paste remove all formatting from the pasted text and paste it as plain text
-  React.useEffect(() => {
-    document.addEventListener('paste', (event) => {
-      event.preventDefault();
-      const text = event.clipboardData?.getData('text/plain') ?? '';
-      document.execCommand('insertText', false, text);
-    });
-  }, []);
+  const [leafletData, setLeafletData] =
+    React.useState<LeafletData>(defaultLeafletData);
 
   // function to change the image source by clicking on it and selecting file
   const handleImageClick = (clickEvent: React.MouseEvent<HTMLImageElement>) => {
@@ -43,6 +91,15 @@ export default function Home() {
     };
     input.click();
   };
+
+  // on paste remove all formatting from the pasted text and paste it as plain text
+  React.useEffect(() => {
+    document.addEventListener('paste', (event) => {
+      event.preventDefault();
+      const text = event.clipboardData?.getData('text/plain') ?? '';
+      document.execCommand('insertText', false, text);
+    });
+  }, []);
 
   // on load focus on the data-focus element
   React.useEffect(() => {
@@ -134,6 +191,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
         <div
           className=""
           // className="overflow-y-hidden"
@@ -151,222 +209,78 @@ export default function Home() {
               gap: '20px',
             }}
           >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px',
-              }}
-            >
-              <div
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: '12px',
-                  lineHeight: '1',
-                }}
-                contentEditable
-                suppressContentEditableWarning
-              >
-                Как сделать дом безопасным
-              </div>
-              <div
-                style={{
-                  fontSize: '11px',
-                  lineHeight: '1.3',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px',
-                }}
-                contentEditable
-                suppressContentEditableWarning
-                data-placeholder="Убрать провода, закрыть окна, убрать цветы с пола, опасные и мелкие предметы . Это поможет питомцу не пораниться и не отравиться. Не пускайте питомца на диван и кровать, чтобы он не мог оттуда упасть."
-                data-focus
-              >
-                {/* <div>
-                  Первые 2–3 дня нужно ограничить пространство одной комнатой.
-                  В свободном доступе у котёнка в этой комнате должны быть миски
-                  с водой, едой и лоток. Это делается для того, чтобы котёнок
-                  не растерялся в новом месте. Для него все будет новым: место,
-                  люди, запахи, лоток. Поэтому очень важно, чтобы все было
-                  в зоне его досягаемости. Когда увидите, что он чётко ходит
-                  в лоток, признал его своим — можете переставить лоток в другое
-                  место. Но обязательно покажите его котёнку,
-                  чтобы он не потерял лоток. Посадите котёнка в лоток,
-                  чтобы он сам вышел из него.
+            {leafletData.sections.map(
+              (section: LeafletSection, index: number) => (
+                <div
+                  key={index}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: '12px',
+                      lineHeight: '1',
+                    }}
+                    contentEditable
+                    suppressContentEditableWarning
+                    data-placeholder={section.title.placeholder}
+                  >
+                    {section.title.value}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '11px',
+                      lineHeight: '1.3',
+                      marginBottom: '4px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '10px',
+                    }}
+                    contentEditable
+                    suppressContentEditableWarning
+                    data-placeholder={section.content.placeholder}
+                    data-focus={index === 0 ? true : undefined}
+                  >
+                    {section.content.value}
+                  </div>
                 </div>
-                <div>
-                  Первые пару дней он может плохо кушать или даже не кушать
-                  совсем. Не пугайтесь, такое бывает в первые дни — он покушает
-                  ночью, когда все будут спать. Потом все наладится. Можете
-                  предложить котёнку влажный корм для аппетита.
-                </div> */}
-              </div>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px',
-              }}
-            >
-              <div
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: '12px',
-                  lineHeight: '1',
-                }}
-                contentEditable
-                suppressContentEditableWarning
-              >
-                Как помочь обустроиться в доме
-              </div>
-              <div
-                style={{
-                  fontSize: '11px',
-                  lineHeight: '1.3',
-                  marginBottom: '4px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px',
-                }}
-                contentEditable
-                suppressContentEditableWarning
-                data-placeholder="Лежанка, когтеточка, игрушки, туалет и тихое место для отдыха. Это поможет питомцу адаптироваться к новому дому."
-              >
-                {/* <div>
-                  Свежая питьевая вода и сухой корм всегда должны быть в доступе
-                  для питомца. Влажный корм для котят до года или премиум класса
-                  можно давать один раз в день.
-                </div>
-                <div>
-                  В качестве сухого корма используйте «Proplan для котят»,
-                  а из влажных подойдут «Royal Canin Kitten Instinctive
-                  для котят» и паштет «Royal Canin Babycat Instinctive».
-                </div>
-                <div>
-                  Дополнительно питомцу можно давать: вареное постное мясо
-                  или сырое, промороженное не менее суток в морозилке.
-                  Также можно предлагать творог, йогурт без добавок,
-                  сметану, сыр. Варёное куриное или перепелиное яйцо
-                  1 раз в неделю.
-                </div>
-                <div>
-                  Котёнку нельзя давать сладкое, солёное, маринованное, копчёное
-                  и острое.
-                </div> */}
-              </div>
-            </div>
+              )
+            )}
 
             <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px',
-              }}
-            >
-              <div
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: '12px',
-                  lineHeight: '1',
-                }}
-                contentEditable
-                suppressContentEditableWarning
-              >
-                Чем кормить питомца
-              </div>
-              <div
-                style={{
-                  fontSize: '11px',
-                  lineHeight: '1.3',
-                  marginBottom: '4px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px',
-                }}
-                contentEditable
-                suppressContentEditableWarning
-                data-placeholder="Вода и сухой корм всегда должны быть в доступе. Первые пару дней он может плохо кушать или даже не кушать совсем. Не пугайтесь, такое бывает в первые дни — он покушает ночью, когда все будут спать. Потом все наладится."
-              >
-                {/* <div>
-                  Сухой корм у котят всегда должен быть в свободном доступе.
-                  Это делается для того, чтобы котёнок не переедал.
-                </div>
-                <div>
-                  Если его кормить по часам, то он будет стараться съесть
-                  как можно больше, думая что в следующий раз не покормят.
-                  Если после этого котёнок попьёт водички, то съеденный
-                  в большом объёме корм разбухнет в желудке у котёнка,
-                  и он начнёт его срыгивать.
-                </div>
-                <div>
-                  Поэтому миску с кормом лучше держать в свободном доступе.
-                  Так он научится есть столько, сколько ему нужно: будет много
-                  раз за день подходить к миске и кушать по чуть-чуть.
-                </div> */}
-              </div>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px',
-              }}
-            >
-              <div
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: '12px',
-                  lineHeight: '1',
-                }}
-                contentEditable
-                suppressContentEditableWarning
-              >
-                Какие прививки делать
-              </div>
-              <div
-                style={{
-                  fontSize: '11px',
-                  lineHeight: '1.3',
-                  marginBottom: '4px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px',
-                }}
-                contentEditable
-                suppressContentEditableWarning
-                data-placeholder="Например, через 3 месяца после первой прививки. Это поможет питомцу защититься от инфекций и болезней. До второй прививки не гуляйте с питомцем на улице, чтобы он не подхватил инфекцию."
-              >
-                {/* <div>
-                  Сухой корм у котят всегда должен быть в свободном доступе.
-                  Это делается для того, чтобы котёнок не переедал.
-                </div>
-                <div>
-                  Если его кормить по часам, то он будет стараться съесть
-                  как можно больше, думая что в следующий раз не покормят.
-                  Если после этого котёнок попьёт водички, то съеденный
-                  в большом объёме корм разбухнет в желудке у котёнка,
-                  и он начнёт его срыгивать.
-                </div> */}
-              </div>
-            </div>
-
-            {/* hover button to add a new block */}
-            {/* <div
               style={{
                 width: '100%',
                 height: '30px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#f0f0f0',
                 borderRadius: '4px',
                 cursor: 'pointer',
               }}
+              className="text-xs text-[#3e6688] hover:bg-[#3e668810] active:bg-[#3e668830] border border-[#3e668832] flex items-center justify-center px-2"
               data-hide-on-export
+              onClick={() => {
+                setLeafletData((prevData) => ({
+                  ...prevData,
+                  sections: [
+                    ...prevData.sections,
+                    {
+                      title: {
+                        value: '',
+                        placeholder: 'Введите заголовок секции',
+                      },
+                      content: {
+                        value: '',
+                        placeholder: 'Введите текст секции',
+                      },
+                    },
+                  ],
+                }));
+              }}
             >
-              + Добавить блок
-            </div> */}
+              Добавить раздел
+            </div>
           </div>
           <div style={{ width: '125px', flexShrink: 0 }}>
             <div
