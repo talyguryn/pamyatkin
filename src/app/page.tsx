@@ -1,16 +1,16 @@
 'use client';
 import React from 'react';
 import { Mars, Venus } from 'lucide-react';
-
 import { exportToPdf } from '@/utils/export';
-
 import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
+import EditableDiv from '@/components/editableDiv';
 
+const leafletDataLocalStorageKey = 'leafletData';
 const defaultLeafletData: LeafletData = {
-  title: { value: 'Инструкция по уходу', placeholder: 'Введите заголовок' },
-  petName: { value: 'Имя питомца', placeholder: 'Введите имя питомца' },
+  title: { value: 'Инструкция по уходу', placeholder: 'Заголовок памятки' },
+  petName: { value: '', placeholder: 'Имя питомца' },
   petSexIsMale: true,
-  imageSrc: '/cat.png',
+  imageSrc: '',
   asideSection: [
     {
       title: {
@@ -105,6 +105,20 @@ export default function Home() {
   const [leafletData, setLeafletData] =
     React.useState<LeafletData>(defaultLeafletData);
 
+  // Load from localStorage on client after mount
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem(leafletDataLocalStorageKey);
+      if (stored) {
+        try {
+          setLeafletData(JSON.parse(stored) as LeafletData);
+        } catch {
+          setLeafletData(defaultLeafletData);
+        }
+      }
+    }
+  }, []);
+
   // function to change the image source by clicking on it and selecting file
   const handleImageClick = (clickEvent: React.MouseEvent<HTMLImageElement>) => {
     const input = document.createElement('input');
@@ -129,12 +143,43 @@ export default function Home() {
         imageElement.classList.remove('hidden'); // Show the image
         containerElement.querySelector('div')?.classList.add('hidden');
         containerElement.querySelector('div')?.classList.remove('flex');
+
+        // Update leaflet data with the new image source
+        setLeafletData((prevData) => ({
+          ...prevData,
+          imageSrc: img,
+        }));
       };
       reader.readAsDataURL(file);
       input.remove();
     };
     input.click();
   };
+
+  const handleBuyClick = () => {
+    // show modal popup with payment form and button "Купить"
+    // const modal = document.getElementById('payment-modal');
+
+    // if (modal) {
+    //   modal.style.display = 'flex';
+    // }
+
+    alert(
+      'Покупка PDF в разработке. Пока что вы можете скачать PDF бесплатно.'
+    );
+
+    exportToPdf(document.getElementById('leaflet'), true);
+  };
+
+  // on change of leafletData, update saved data in localStorage
+  React.useEffect(() => {
+    localStorage.setItem(
+      leafletDataLocalStorageKey,
+      JSON.stringify(leafletData)
+    );
+
+    console.log('Leaflet data updated:', leafletData);
+  }, [leafletData]);
 
   // on paste remove all formatting from the pasted text and paste it as plain text
   React.useEffect(() => {
@@ -157,8 +202,74 @@ export default function Home() {
     }
   }, []);
 
+  // handler for onchange on contentEditable element gets the element and updates the leafletData
+  const handleContentEditableChange = (
+    e: React.ChangeEvent<HTMLDivElement>,
+    index: number,
+    field: 'title' | 'content',
+    sectionIndex?: number
+  ) => {
+    const value = e.currentTarget.innerText;
+    setLeafletData((prevData) => {
+      const updatedSections = [...prevData.sections];
+      if (sectionIndex !== undefined) {
+        updatedSections[sectionIndex] = {
+          ...updatedSections[sectionIndex],
+          [field]: {
+            ...updatedSections[sectionIndex][field],
+            value,
+          },
+        };
+      } else {
+        updatedSections[index] = {
+          ...updatedSections[index],
+          [field]: {
+            ...updatedSections[index][field],
+            value,
+          },
+        };
+      }
+      return {
+        ...prevData,
+        sections: updatedSections,
+      };
+    });
+  };
+
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
+      {/* modal popup window with payment form */}
+      {/* <div
+        className="fixed inset-0 flex items-center justify-center z-50 h-screen w-screen"
+        // style={{ display: 'none' }} // Initially hidden
+        style={{
+          backdropFilter: 'blur(5px)',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          cursor: 'pointer',
+        }}
+        id="payment-modal"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            (e.currentTarget as HTMLElement).style.display = 'none';
+          }
+        }}
+      >
+        <div className="bg-white p-6 rounded shadow-lg w-96">
+          <h2 className="text-5xl font-bold mb-4">Купить и скачать памятку</h2>
+          <button
+            className="w-full bg-[#3e6688] text-white py-2 rounded hover:bg-[#31506b] active:bg-[#2b3e4d] cursor-pointer"
+            onClick={() => {
+              (
+                document.getElementById('payment-modal') as HTMLElement
+              ).style.display = 'none';
+              exportToPdf(document.getElementById('leaflet'), true);
+            }}
+          >
+            Купить за 199 руб
+          </button>
+        </div>
+      </div> */}
+
       {/* leaflet */}
       <div
         className="bg-white mt-20 mb-[470px] pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] min-h-[842px] relative"
@@ -196,37 +307,44 @@ export default function Home() {
             width: '100%',
           }}
         >
-          <div
+          <EditableDiv
+            value={leafletData.title.value}
+            onChange={(value) =>
+              setLeafletData((prevData) => ({
+                ...prevData,
+                title: {
+                  ...prevData.title,
+                  value,
+                } as LeafletTextfield,
+              }))
+            }
+            contentEditable={false}
+            placeholder={leafletData.title.placeholder}
             style={{
               fontWeight: 'bold',
               fontSize: '32px',
               lineHeight: '1',
               width: '380px',
             }}
-            // contentEditable
-            // suppressContentEditableWarning
-            data-placeholder="Заголовок памятки"
-          >
-            Инструкция
-            <br />
-            по уходу
-          </div>
+          />
           <div
             style={{ width: '125px', height: '125px' }}
             className="flex-shrink-0 group relative hover:cursor-pointer"
             onClick={handleImageClick}
           >
             <img
-              className="hidden"
+              className={leafletData.imageSrc ? 'block' : 'hidden'}
               style={{
                 objectFit: 'cover',
                 width: '100%',
                 height: '100%',
               }}
-              src="/cat.png"
+              src={leafletData.imageSrc || '/cat.png'}
               alt="Cat"
             />
-            <div className="flex group-hover:flex text-center absolute w-full h-full top-0 items-center justify-center bg-[#ffffffbb] border border-dashed border-[#3e668832] hover:border-[#3e668861] backdrop-blur-xs">
+            <div
+              className={`${leafletData.imageSrc ? 'hidden' : 'flex'} group-hover:flex text-center absolute w-full h-full top-0 items-center justify-center bg-[#ffffffbb] border border-dashed border-[#3e668832] hover:border-[#3e668861] backdrop-blur-xs`}
+            >
               <span className="text-xs text-[#3e6688]">
                 Фотография
                 <br />
@@ -262,19 +380,52 @@ export default function Home() {
                     gap: '10px',
                   }}
                 >
-                  <div
+                  <EditableDiv
+                    value={section.title.value}
+                    onChange={(value) =>
+                      setLeafletData((prevData) => {
+                        const updatedSections = [...prevData.sections];
+                        updatedSections[index] = {
+                          ...updatedSections[index],
+                          title: {
+                            ...updatedSections[index].title,
+                            value,
+                          },
+                        };
+                        return {
+                          ...prevData,
+                          sections: updatedSections,
+                        };
+                      })
+                    }
+                    contentEditable={true}
+                    placeholder={section.title.placeholder}
                     style={{
                       fontWeight: 'bold',
                       fontSize: '12px',
                       lineHeight: '1',
                     }}
-                    contentEditable
-                    suppressContentEditableWarning
-                    data-placeholder={section.title.placeholder}
-                  >
-                    {section.title.value}
-                  </div>
-                  <div
+                  />
+                  <EditableDiv
+                    value={section.content.value}
+                    onChange={(value) =>
+                      setLeafletData((prevData) => {
+                        const updatedSections = [...prevData.sections];
+                        updatedSections[index] = {
+                          ...updatedSections[index],
+                          content: {
+                            ...updatedSections[index].content,
+                            value,
+                          },
+                        };
+                        return {
+                          ...prevData,
+                          sections: updatedSections,
+                        };
+                      })
+                    }
+                    contentEditable={true}
+                    placeholder={section.content.placeholder}
                     style={{
                       fontSize: '11px',
                       lineHeight: '1.3',
@@ -283,13 +434,8 @@ export default function Home() {
                       flexDirection: 'column',
                       gap: '10px',
                     }}
-                    contentEditable
-                    suppressContentEditableWarning
-                    data-placeholder={section.content.placeholder}
                     data-focus={index === 0 ? true : undefined}
-                  >
-                    {section.content.value}
-                  </div>
+                  />
                 </div>
               )
             )}
@@ -311,7 +457,7 @@ export default function Home() {
                     {
                       title: {
                         value: '',
-                        placeholder: 'Введите заголовок секции',
+                        placeholder: 'Заголовок секции',
                       },
                       content: {
                         value: '',
@@ -335,25 +481,30 @@ export default function Home() {
                 marginBottom: '10px',
               }}
             >
-              <div
+              <EditableDiv
+                value={leafletData.petName.value}
+                onChange={(value) =>
+                  setLeafletData((prevData) => ({
+                    ...prevData,
+                    petName: {
+                      ...prevData.petName,
+                      value,
+                    } as LeafletTextfield,
+                  }))
+                }
+                contentEditable={true}
+                placeholder={leafletData.petName.placeholder}
                 style={{
                   fontSize: '15px',
                   lineHeight: '1',
                 }}
-                contentEditable
-                suppressContentEditableWarning
-                data-placeholder="Имя питомца"
-              ></div>
+              />
 
               <div
                 style={{
-                  // flexShrink: 0,
-                  // borderRadius: '4px',
-                  // border: '1px solid #3e668832',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  // padding: '0 4px',
                 }}
                 onClick={(e) => {
                   const checkbox = e.currentTarget.querySelector(
@@ -373,8 +524,8 @@ export default function Home() {
                   type="checkbox"
                   style={{ display: 'none' }}
                   checked={leafletData.petSexIsMale}
-                  onChange={(e) => {}}
                   className="cursor-pointer"
+                  onChange={(e) => {}}
                 />
                 {leafletData.petSexIsMale ? (
                   <Mars size={15} />
@@ -403,15 +554,54 @@ export default function Home() {
                       gap: '2px',
                     }}
                   >
-                    <div style={{}}>{section.title.value}</div>
-                    <div
+                    <EditableDiv
+                      value={section.title.value}
+                      onChange={(value) =>
+                        setLeafletData((prevData) => {
+                          const updatedAsideSection = [
+                            ...prevData.asideSection,
+                          ];
+                          updatedAsideSection[index] = {
+                            ...updatedAsideSection[index],
+                            title: {
+                              ...updatedAsideSection[index].title,
+                              value,
+                            },
+                          };
+                          return {
+                            ...prevData,
+                            asideSection: updatedAsideSection,
+                          };
+                        })
+                      }
+                      contentEditable={false}
+                      placeholder={section.title.placeholder}
                       style={{}}
-                      contentEditable
-                      suppressContentEditableWarning
-                      data-placeholder={section.content.placeholder}
-                    >
-                      {section.content.value}
-                    </div>
+                    />
+                    <EditableDiv
+                      value={section.content.value}
+                      onChange={(value) =>
+                        setLeafletData((prevData) => {
+                          const updatedAsideSection = [
+                            ...prevData.asideSection,
+                          ];
+                          updatedAsideSection[index] = {
+                            ...updatedAsideSection[index],
+                            content: {
+                              ...updatedAsideSection[index].content,
+                              value,
+                            },
+                          };
+                          return {
+                            ...prevData,
+                            asideSection: updatedAsideSection,
+                          };
+                        })
+                      }
+                      contentEditable={true}
+                      placeholder={section.content.placeholder}
+                      style={{}}
+                    />
                   </div>
                 )
               )}
@@ -426,9 +616,29 @@ export default function Home() {
         </a>
       </div>
 
+      <div className="fixed bottom-4 left-4 flex flex-col gap-2">
+        <button
+          className="px-8 py-2 bg-white text-[#883e3e] rounded hover:bg-[#ffeeee] active:bg-[#f0bfbf] cursor-pointer"
+          onClick={() => {
+            if (
+              !confirm(
+                'Вы уверены, что хотите очистить форму? Все данные будут потеряны.'
+              )
+            ) {
+              return;
+            }
+
+            setLeafletData(defaultLeafletData);
+            localStorage.removeItem(leafletDataLocalStorageKey);
+          }}
+        >
+          Очистить форму
+        </button>
+      </div>
+
       <div className="fixed bottom-4 right-4 flex flex-col gap-2">
         <button
-          className="px-8 py-2 bg-white text-[#3e6688] rounded hover:bg-[#3e668810] active:bg-[#3e668830] cursor-pointer"
+          className="px-8 py-2 bg-white text-[#3e6688] rounded hover:bg-[#eef7ff] active:bg-[#bfd9f0] cursor-pointer"
           onClick={() => {
             exportToPdf(document.getElementById('leaflet'));
           }}
@@ -438,10 +648,10 @@ export default function Home() {
         <button
           className="px-8 py-2 bg-[#3e6688] text-white rounded hover:bg-[#31506b] active:bg-[#2b3e4d] cursor-pointer"
           onClick={() => {
-            exportToPdf(document.getElementById('leaflet'), true);
+            handleBuyClick();
           }}
         >
-          Скачать PDF
+          Купить PDF
         </button>
       </div>
     </div>
