@@ -157,18 +157,10 @@ export default function Home() {
   };
 
   const handleBuyClick = () => {
-    // show modal popup with payment form and button "Купить"
-    // const modal = document.getElementById('payment-modal');
 
-    // if (modal) {
-    //   modal.style.display = 'flex';
-    // }
 
-    alert(
-      'Покупка PDF в разработке. Пока что вы можете скачать PDF бесплатно.'
-    );
 
-    exportToPdf(document.getElementById('leaflet'), true);
+    // exportToPdf(document.getElementById('leaflet'), true);
   };
 
   // on change of leafletData, update saved data in localStorage
@@ -201,40 +193,6 @@ export default function Home() {
       });
     }
   }, []);
-
-  // handler for onchange on contentEditable element gets the element and updates the leafletData
-  const handleContentEditableChange = (
-    e: React.ChangeEvent<HTMLDivElement>,
-    index: number,
-    field: 'title' | 'content',
-    sectionIndex?: number
-  ) => {
-    const value = e.currentTarget.innerText;
-    setLeafletData((prevData) => {
-      const updatedSections = [...prevData.sections];
-      if (sectionIndex !== undefined) {
-        updatedSections[sectionIndex] = {
-          ...updatedSections[sectionIndex],
-          [field]: {
-            ...updatedSections[sectionIndex][field],
-            value,
-          },
-        };
-      } else {
-        updatedSections[index] = {
-          ...updatedSections[index],
-          [field]: {
-            ...updatedSections[index][field],
-            value,
-          },
-        };
-      }
-      return {
-        ...prevData,
-        sections: updatedSections,
-      };
-    });
-  };
 
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
@@ -271,38 +229,6 @@ export default function Home() {
           .
         </div>
       </div>
-
-      {/* modal popup window with payment form */}
-      {/* <div
-        className="fixed inset-0 flex items-center justify-center z-50 h-screen w-screen"
-        // style={{ display: 'none' }} // Initially hidden
-        style={{
-          backdropFilter: 'blur(5px)',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          cursor: 'pointer',
-        }}
-        id="payment-modal"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            (e.currentTarget as HTMLElement).style.display = 'none';
-          }
-        }}
-      >
-        <div className="bg-white p-6 rounded shadow-lg w-96">
-          <h2 className="text-5xl font-bold mb-4">Купить и скачать памятку</h2>
-          <button
-            className="w-full bg-[#3e6688] text-white py-2 rounded hover:bg-[#31506b] active:bg-[#2b3e4d] cursor-pointer"
-            onClick={() => {
-              (
-                document.getElementById('payment-modal') as HTMLElement
-              ).style.display = 'none';
-              exportToPdf(document.getElementById('leaflet'), true);
-            }}
-          >
-            Купить за 199 руб
-          </button>
-        </div>
-      </div> */}
 
       {/* leaflet */}
       <div
