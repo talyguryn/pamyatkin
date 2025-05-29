@@ -502,7 +502,7 @@ export default function Home() {
                 }));
               }}
             >
-              Добавить раздел
+              Добавить секцию
             </div>
           </div>
           <div style={{ width: '125px', flexShrink: 0 }}>
