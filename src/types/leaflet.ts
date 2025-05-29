@@ -11,6 +11,8 @@ export type LeafletTextfield = {
 export type LeafletData = {
   title: LeafletTextfield;
   petName: LeafletTextfield;
+  petSexIsMale: boolean;
   imageSrc: string;
+  asideSection: LeafletSection[];
   sections: LeafletSection[];
 };

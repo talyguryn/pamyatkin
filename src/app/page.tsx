@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { Mars, Venus } from 'lucide-react';
 
 import { exportToPdf } from '@/utils/export';
 
@@ -8,7 +9,50 @@ import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
 const defaultLeafletData: LeafletData = {
   title: { value: 'Инструкция по уходу', placeholder: 'Введите заголовок' },
   petName: { value: 'Имя питомца', placeholder: 'Введите имя питомца' },
+  petSexIsMale: true,
   imageSrc: '/cat.png',
+  asideSection: [
+    {
+      title: {
+        value: 'Дата рождения',
+        placeholder: '',
+      },
+      content: {
+        value: '',
+        placeholder: '22.02.2025',
+      },
+    },
+    {
+      title: {
+        value: 'Порода и окрас',
+        placeholder: '',
+      },
+      content: {
+        value: '',
+        placeholder: 'Мейн-кун, кремовый солид',
+      },
+    },
+    {
+      title: {
+        value: 'Имя в родословной',
+        placeholder: '',
+      },
+      content: {
+        value: '',
+        placeholder: 'Arman Pride Yan',
+      },
+    },
+    {
+      title: {
+        value: 'Номер чипа',
+        placeholder: '',
+      },
+      content: {
+        value: '',
+        placeholder: '643 099 000 000 000',
+      },
+    },
+  ],
   sections: [
     {
       title: {
@@ -194,7 +238,6 @@ export default function Home() {
 
         <div
           className=""
-          // className="overflow-y-hidden"
           style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -284,11 +327,95 @@ export default function Home() {
           </div>
           <div style={{ width: '125px', flexShrink: 0 }}>
             <div
-              style={{ fontSize: '15px', lineHeight: '1' }}
-              contentEditable
-              suppressContentEditableWarning
-              data-placeholder="Имя питомца"
-            ></div>
+              style={{
+                display: 'flex',
+                gap: '2px',
+                justifyContent: 'start',
+                alignItems: 'stretch',
+                marginBottom: '10px',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '15px',
+                  lineHeight: '1',
+                }}
+                contentEditable
+                suppressContentEditableWarning
+                data-placeholder="Имя питомца"
+              ></div>
+
+              <div
+                style={{
+                  // flexShrink: 0,
+                  // borderRadius: '4px',
+                  // border: '1px solid #3e668832',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  // padding: '0 4px',
+                }}
+                onClick={(e) => {
+                  const checkbox = e.currentTarget.querySelector(
+                    'input[type="checkbox"]'
+                  ) as HTMLInputElement;
+                  if (checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                    setLeafletData((prevData) => ({
+                      ...prevData,
+                      petSexIsMale: checkbox.checked,
+                    }));
+                  }
+                }}
+                className="cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  style={{ display: 'none' }}
+                  checked={leafletData.petSexIsMale}
+                  onChange={(e) => {}}
+                  className="cursor-pointer"
+                />
+                {leafletData.petSexIsMale ? (
+                  <Mars size={15} />
+                ) : (
+                  <Venus size={15} />
+                )}
+              </div>
+            </div>
+
+            <div
+              style={{
+                fontSize: '9px',
+                lineHeight: '1.3',
+                gap: '6px',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              {(leafletData.asideSection || []).map(
+                (section: LeafletSection, index: number) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '2px',
+                    }}
+                  >
+                    <div style={{}}>{section.title.value}</div>
+                    <div
+                      style={{}}
+                      contentEditable
+                      suppressContentEditableWarning
+                      data-placeholder={section.content.placeholder}
+                    >
+                      {section.content.value}
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
           </div>
         </div>
       </div>
