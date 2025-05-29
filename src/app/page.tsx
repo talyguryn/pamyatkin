@@ -4,6 +4,7 @@ import { Mars, Venus } from 'lucide-react';
 import { exportToPdf } from '@/utils/export';
 import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
 import EditableDiv from '@/components/editableDiv';
+import axios from 'axios';
 
 const leafletDataLocalStorageKey = 'leafletData';
 const defaultLeafletData: LeafletData = {
@@ -156,9 +157,20 @@ export default function Home() {
     input.click();
   };
 
-  const handleBuyClick = () => {
+  const handleBuyClick = async () => {
+    const paymentRequest = await axios.get('/api/kassa');
+    if (paymentRequest.status !== 200) {
+      alert('Ошибка при создании платежа. Попробуйте позже.');
+      return;
+    }
 
+    const paymentData = paymentRequest.data;
+    console.log('Payment created:', paymentData);
 
+    const paymentUrl = paymentData.confirmation.confirmation_url;
+    if (paymentUrl) {
+      window.open(paymentUrl, '_blank');
+    }
 
     // exportToPdf(document.getElementById('leaflet'), true);
   };
