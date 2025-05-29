@@ -24,13 +24,14 @@ export default function EditableDiv({
   useEffect(() => {
     // Set initial content once
     if (divRef.current && divRef.current.innerHTML !== value) {
-      divRef.current.innerHTML = value;
+      divRef.current.innerHTML = value.replace(/\n/g, '<br>');
     }
   }, [value]);
 
   const handleInput = () => {
     if (divRef.current) {
-      const html = divRef.current.innerHTML;
+      // Convert <br> tags back to line breaks
+      const html = divRef.current.innerHTML.replace(/<br\s*\/?>/gi, '\n');
       onChange?.(html);
     }
   };

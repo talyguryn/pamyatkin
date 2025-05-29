@@ -7,7 +7,7 @@ import EditableDiv from '@/components/editableDiv';
 
 const leafletDataLocalStorageKey = 'leafletData';
 const defaultLeafletData: LeafletData = {
-  title: { value: 'Инструкция по уходу', placeholder: 'Заголовок памятки' },
+  title: { value: `Инструкция<br>по уходу`, placeholder: 'Заголовок памятки' },
   petName: { value: '', placeholder: 'Имя питомца' },
   petSexIsMale: true,
   imageSrc: '',
