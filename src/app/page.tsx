@@ -238,6 +238,40 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
+      <div className="w-[808px]">
+        <div className="text-5xl font-bold text-[#3e6688] mt-10 mb-2">
+          Памяткин
+        </div>
+        <div className="text-2xl text-[#3e6688] mb-8">
+          Сервис для создания памяток по уходу за питомцем
+        </div>
+        <div className="text-[#3e6688]">
+          <div>Чтобы сделать инструкцию по уходу за питомцем:</div>
+          <ul className="space-y-2 ml-4 mb-0">
+            <li>Загрузите фотографию питомца и заполните данные о нем.</li>
+            <li>
+              Заполните разделы инструкции. Редактируйте заголовки и основной
+              текст инструкции. Добавьте свои разделы с помощью кнопки «Добавить
+              раздел».
+            </li>
+            <li>
+              Нажмите кнопку «Купить PDF», чтобы оплатить и скачать получившийся
+              файл.
+            </li>
+          </ul>
+        </div>
+        <div className="text-[#3e6688] text-xs mt-4">
+          Если у вас есть вопросы или пожелания, напишите нам на{' '}
+          <a
+            href="mailto:info@pamyatkin.ru"
+            className="text-[#3e6688] underline"
+          >
+            info@pamyatkin.ru
+          </a>
+          .
+        </div>
+      </div>
+
       {/* modal popup window with payment form */}
       {/* <div
         className="fixed inset-0 flex items-center justify-center z-50 h-screen w-screen"
