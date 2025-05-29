@@ -52,6 +52,7 @@ export async function exportToPdf(
       contentEditableElements.forEach((el) => {
         (el as HTMLElement).style.border = 'none';
         (el as HTMLElement).style.padding = '0';
+        (el as HTMLElement).style.minHeight = '0';
       });
     },
   });

@@ -467,6 +467,7 @@ export default function Home() {
                       display: 'flex',
                       flexDirection: 'column',
                       gap: '10px',
+                      minHeight: '68px',
                     }}
                     data-focus={index === 0 ? true : undefined}
                   />
