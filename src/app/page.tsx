@@ -239,7 +239,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-stone-100">
       <div className="w-[808px]">
-        <div className="text-5xl font-bold text-[#3e6688] mt-10 mb-2">
+        <div className="text-5xl font-bold text-[#3e6688] mt-20 mb-2">
           Памяткин
         </div>
         <div className="text-2xl text-[#3e6688] mb-8">
@@ -306,7 +306,7 @@ export default function Home() {
 
       {/* leaflet */}
       <div
-        className="bg-white mt-20 mb-[470px] pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] min-h-[842px] relative"
+        className="bg-white mt-18 mb-[470px] pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] min-h-[842px] relative"
         id="leaflet"
         style={{
           fontFamily: 'Arial, sans-serif',
