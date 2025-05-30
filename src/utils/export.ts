@@ -1,5 +1,4 @@
 const { jsPDF } = await import('jspdf');
-const html2canvas = (await import('html2canvas-pro')).default;
 
 const SCALE = 2; // Scale factor for high DPI rendering
 
@@ -12,6 +11,8 @@ export async function exportToPdf(
     alert('Leaflet element not found!');
     return;
   }
+
+  const html2canvas = (await import('html2canvas-pro')).default;
 
   const canvas = await html2canvas(element, {
     scale: SCALE,
@@ -87,16 +88,17 @@ export async function exportToPdf(
       return;
     }
     const sourceY = currentPage * pageHeight;
+    const drawHeight = Math.min(pageHeight, imgHeight - sourceY);
     ctx.drawImage(
       canvas,
       0,
       sourceY,
       imgWidth,
-      Math.min(pageHeight, imgHeight - sourceY),
+      drawHeight,
       0,
       0,
       pageWidth,
-      Math.min(pageHeight, imgHeight - sourceY)
+      drawHeight
     );
 
     // Convert the canvas to an image and add it to the PDF
