@@ -36,7 +36,7 @@ export default function Home() {
           })
           .catch((error) => {
             console.error('Error checking payment status:', error);
-            alert('Ошибка при проверке статуса платежа. Попробуйте позже.');
+            // alert('Ошибка при проверке статуса платежа. Попробуйте позже.');
           });
       }
     }
