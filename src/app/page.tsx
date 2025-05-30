@@ -10,6 +10,38 @@ import Leaflet from '@/components/leaflet';
 import { getPrice } from '@/utils/price';
 
 export default function Home() {
+  // check query parameters 'from' in url
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const from = urlParams.get('from');
+    if (from && from === 'kassa') {
+      // try to check payment status
+      const lastPaymentId = localStorage.getItem('lastPaymentId');
+
+      if (lastPaymentId) {
+        axios
+          .get(`/api/check-payments?id=${lastPaymentId}`)
+          .then((response) => {
+            const paymentData = response.data;
+            console.log('Payment status:', paymentData);
+            if (paymentData.status === 'succeeded') {
+              alert(
+                'Платеж успешно завершен! Инструкция сейчас будет загружена.'
+              );
+              exportToPdf(document.getElementById('leaflet'), true);
+              localStorage.removeItem('lastPaymentId');
+            } else {
+              alert('Платеж не завершен. Попробуйте еще раз.');
+            }
+          })
+          .catch((error) => {
+            console.error('Error checking payment status:', error);
+            alert('Ошибка при проверке статуса платежа. Попробуйте позже.');
+          });
+      }
+    }
+  }, []);
+
   const handleBuyClick = async () => {
     const paymentRequest = await axios.get('/api/kassa');
     if (paymentRequest.status !== 200) {
@@ -21,9 +53,16 @@ export default function Home() {
     console.log('Payment created:', paymentData);
 
     const paymentUrl = paymentData.confirmation.confirmation_url;
-    if (paymentUrl) {
-      window.open(paymentUrl, '_blank');
+    if (!paymentUrl) {
+      alert('Ошибка при получении URL для оплаты. Попробуйте позже.');
+      return;
     }
+
+    // get payment id and save to localStorage in user last payment
+    const paymentId = paymentData.id;
+    localStorage.setItem('lastPaymentId', paymentId);
+
+    window.location.href = paymentUrl;
 
     // exportToPdf(document.getElementById('leaflet'), true);
   };
