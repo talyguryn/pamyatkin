@@ -8,7 +8,5 @@ export default async function handler(
 ) {
   console.log('Kassa event received:', req.method, req.body);
 
-  const data = req.body;
-  console.log('Kassa data received:', data);
   res.status(200).json({ status: 'ok' });
 }

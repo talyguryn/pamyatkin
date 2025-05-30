@@ -57,8 +57,6 @@ export async function exportToPdf(
     },
   });
 
-  const imgData = canvas.toDataURL('image/png');
-
   const pageWidth = canvas.width;
   const pageHeight = canvas.width / (595 / 842); // A4 aspect ratio
 
@@ -74,9 +72,9 @@ export async function exportToPdf(
   const imgHeight = canvas.height;
   const totalPages = Math.ceil(imgHeight / pageHeight);
 
-  console.log(`Total pages: ${totalPages}`);
-  console.log(`Image dimensions: ${imgWidth}x${imgHeight}`);
-  console.log(`Page dimensions: ${pageWidth}x${pageHeight}`);
+  // console.log(`Total pages: ${totalPages}`);
+  // console.log(`Image dimensions: ${imgWidth}x${imgHeight}`);
+  // console.log(`Page dimensions: ${pageWidth}x${pageHeight}`);
 
   let currentPage = 0;
   while (currentPage < totalPages) {
