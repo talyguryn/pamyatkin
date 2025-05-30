@@ -16,7 +16,7 @@ function generateIdempotenceKey(): string {
 
 const createPayload: ICreatePayment = {
   amount: {
-    value: process.env.PRICE || '99.00',
+    value: process.env.NEXT_PUBLIC_PRICE || '0.00',
     currency: 'RUB',
   },
   payment_method_data: {
@@ -36,8 +36,8 @@ export async function createPayment(
       throw new Error('YOOKASSA_SHOP_ID and YOOKASSA_SECRET_KEY are not set');
     }
 
-    if (!process.env.PRICE) {
-      throw new Error('PRICE is not set in environment variables');
+    if (!process.env.NEXT_PUBLIC_PRICE) {
+      throw new Error('NEXT_PUBLIC_PRICE is not set in environment variables');
     }
 
     if (!process.env.HOST) {
