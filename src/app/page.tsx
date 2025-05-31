@@ -70,7 +70,7 @@ export default function Home() {
   return (
     <div className="flex flex-col bg-stone-100">
       {/* two colums layout */}
-      <div className="flex justify-start gap-8 max-w-3xl px-16 py-8">
+      <div className="flex justify-start gap-8 px-16 py-8 mx-auto">
         {/* leaflet */}
         <div className="w-full">
           <Leaflet />
@@ -84,7 +84,7 @@ export default function Home() {
               <div>
                 Соберите и скачайте инструкцию по уходу за домашним животным:
               </div>
-              <ol className="space-y-2 mt-4 list-decimal pl-6">
+              <ol className="space-y-2 mt-1 pl-6">
                 <li>Загрузите фотку и укажите данные животного.</li>
                 <li>Отредактуруйте инструкцию.</li>
                 <li>Оплатите и скачайте файл для печати.</li>
@@ -104,8 +104,8 @@ export default function Home() {
                   return;
                 }
 
-                // setLeafletData(defaultLeafletData);
-                // localStorage.removeItem(leafletDataLocalStorageKey);
+                setLeafletData(defaultLeafletData);
+                localStorage.removeItem(leafletDataLocalStorageKey);
               }}
             >
               Очистить форму
