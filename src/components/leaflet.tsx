@@ -8,6 +8,18 @@ import { defaultLeafletData } from '@/data/leaflet';
 const leafletDataLocalStorageKey = 'leafletData';
 
 export default function Leaflet() {
+  // if query parameter clear is present, clear localStorage
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const clear = urlParams.get('clear');
+    if (clear === 'true') {
+      localStorage.removeItem(leafletDataLocalStorageKey);
+      console.log('Leaflet data cleared from localStorage');
+      // Reset the leaflet data to default
+      setLeafletData(defaultLeafletData);
+    }
+  }, []);
+
   const [leafletData, setLeafletData] =
     React.useState<LeafletData>(defaultLeafletData);
 
