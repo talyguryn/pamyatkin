@@ -25,9 +25,9 @@ export default function Home() {
             const paymentData = response.data;
             console.log('Payment status:', paymentData);
             if (paymentData.status === 'succeeded') {
-              alert(
-                'Платеж успешно завершен! Инструкция сейчас будет загружена.'
-              );
+              // alert(
+              //   'Платеж успешно завершен! Инструкция сейчас будет загружена.'
+              // );
               exportToPdf(document.getElementById('leaflet'), true);
               localStorage.removeItem('lastPaymentId');
             } else {
@@ -125,7 +125,7 @@ export default function Home() {
                 handleBuyClick();
               }}
             >
-              Купить за {getPrice()} ₽
+              Скачать ПДФ за {getPrice()} ₽
             </button>
             <div className="text-[#3e6688] text-xs mb-2">
               Оплачивая, вы соглашаетесь с{' '}
