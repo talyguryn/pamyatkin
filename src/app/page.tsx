@@ -141,10 +141,10 @@ export default function Home() {
             <div className="text-[#3e6688] text-xs mt-12">
               Вопросы и пожелания:{' '}
               <a
-                href="mailto:info@pamyatkin.ru"
+                href="mailto:support@pamyatkin.ru"
                 className="text-[#3e6688] underline"
               >
-                info@pamyatkin.ru
+                support@pamyatkin.ru
               </a>
               .
             </div>
