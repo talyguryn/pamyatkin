@@ -1,7 +1,6 @@
 import React from 'react';
 
 import EditableDiv from '@/components/editableDiv';
-import { Mars, Venus } from 'lucide-react';
 import { Mars, Venus, Plus } from 'lucide-react';
 import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
 import { defaultLeafletData } from '@/data/leaflet';
