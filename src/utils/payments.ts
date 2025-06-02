@@ -62,17 +62,22 @@ const capturePayload: ICreatePayment = {
   },
 };
 
-export async function createPayment(
-  options: { email?: string } = {}
-): Promise<any> {
-  const payload = {
+function createPayloadWithEmail(email?: string): ICreatePayment {
+  return {
     ...createPayload,
     receipt: {
       customer: {
-        email: options.email,
+        email: email || '',
       },
+      items: createPayload.receipt?.items || [],
     },
-  } as ICreatePayment;
+  };
+}
+
+export async function createPayment(
+  options: { email?: string } = {}
+): Promise<any> {
+  const payload = createPayloadWithEmail(options.email);
 
   console.log('Creating payment with payload:', payload);
 
