@@ -113,10 +113,10 @@ export default function Home() {
               Памяткин
             </div>
             <div className="text-[#3e6688]">
-              <div>
+              {/* <div>
                 Соберите и скачайте инструкцию по уходу за домашним животным:
-              </div>
-              <ol className="space-y-2 mt-1 pl-6">
+              </div> */}
+              <ol className="space-y-2 mt-1 list-decimal pl-6">
                 <li>Загрузите фотку и укажите данные животного.</li>
                 <li>Отредактуруйте инструкцию.</li>
                 <li>Оплатите и скачайте файл для печати.</li>
