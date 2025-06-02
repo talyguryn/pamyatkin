@@ -2,6 +2,7 @@ import React from 'react';
 
 import EditableDiv from '@/components/editableDiv';
 import { Mars, Venus } from 'lucide-react';
+import { Mars, Venus, Plus } from 'lucide-react';
 import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
 import { defaultLeafletData } from '@/data/leaflet';
 
@@ -94,16 +95,16 @@ export default function Leaflet() {
   }, []);
 
   /* on load focus on the data-focus element */
-  // React.useEffect(() => {
-  //   const focusElement = document.querySelector('[data-focus]');
-  //   if (focusElement) {
-  //     (focusElement as HTMLElement).focus();
-  //     (focusElement as HTMLElement).scrollIntoView({
-  //       behavior: 'smooth',
-  //       block: 'center',
-  //     });
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    const focusElement = document.querySelector('[data-focus]');
+    if (focusElement) {
+      (focusElement as HTMLElement).focus();
+      (focusElement as HTMLElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, []);
 
   return (
     <div
@@ -283,7 +284,7 @@ export default function Leaflet() {
               borderRadius: '4px',
               cursor: 'pointer',
             }}
-            className="text-xs text-[#3e6688] hover:bg-[#3e668810] active:bg-[#3e668830] border border-[#3e668832] flex items-center justify-center px-2"
+            className="text-xs text-[#3e6688] hover:text-[#1c4c76] flex items-center gap-1"
             data-hide-on-export
             onClick={() => {
               setLeafletData((prevData) => ({
@@ -297,14 +298,15 @@ export default function Leaflet() {
                     },
                     content: {
                       value: '',
-                      placeholder: 'Текст секции',
+                      placeholder: 'Текст блока',
                     },
                   },
                 ],
               }));
             }}
           >
-            Добавить секцию
+            <Plus size={15} />
+            <span>Добавить блок</span>
           </div>
         </div>
         <div style={{ width: '125px', flexShrink: 0 }}>

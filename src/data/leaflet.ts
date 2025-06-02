@@ -51,7 +51,7 @@ export const defaultLeafletData: LeafletData = {
     {
       title: {
         value: 'Как сделать дом безопасным',
-        placeholder: 'Введите заголовок секции',
+        placeholder: 'Заголовок',
       },
       content: {
         value: '',
@@ -62,7 +62,7 @@ export const defaultLeafletData: LeafletData = {
     {
       title: {
         value: 'Как помочь обустроиться в доме',
-        placeholder: 'Введите заголовок секции',
+        placeholder: 'Заголовок',
       },
       content: {
         value: '',
@@ -73,7 +73,7 @@ export const defaultLeafletData: LeafletData = {
     {
       title: {
         value: 'Чем кормить питомца',
-        placeholder: 'Введите заголовок секции',
+        placeholder: 'Заголовок',
       },
       content: {
         value: '',
@@ -84,7 +84,7 @@ export const defaultLeafletData: LeafletData = {
     {
       title: {
         value: 'Какие прививки делать',
-        placeholder: 'Введите заголовок секции',
+        placeholder: 'Заголовок',
       },
       content: {
         value: '',
@@ -94,7 +94,7 @@ export const defaultLeafletData: LeafletData = {
     {
       title: {
         value: 'Контактные данные',
-        placeholder: 'Введите заголовок секции',
+        placeholder: 'Заголовок',
       },
       content: {
         value: '',
