@@ -4,8 +4,8 @@ if (!process.env.YOOKASSA_SHOP_ID || !process.env.YOOKASSA_SECRET_KEY) {
   throw new Error('YOOKASSA_SHOP_ID and YOOKASSA_SECRET_KEY are not set');
 }
 
-if (!process.env.NEXT_PUBLIC_PRICE) {
-  throw new Error('NEXT_PUBLIC_PRICE is not set in environment variables');
+if (!process.env.PRICE) {
+  throw new Error('PRICE is not set in environment variables');
 }
 
 if (!process.env.HOST) {
@@ -28,7 +28,7 @@ function generateIdempotenceKey(): string {
 
 const createPayload: ICreatePayment = {
   amount: {
-    value: process.env.NEXT_PUBLIC_PRICE || '0.00',
+    value: process.env.PRICE || '0.00',
     currency: 'RUB',
   },
   payment_method_data: {
@@ -44,7 +44,7 @@ const createPayload: ICreatePayment = {
         description: 'Создание PDF-памятки',
         quantity: '1.00',
         amount: {
-          value: process.env.NEXT_PUBLIC_PRICE || '0.00',
+          value: process.env.PRICE || '0.00',
           currency: 'RUB',
         },
         vat_code: 1,
@@ -57,7 +57,7 @@ const createPayload: ICreatePayment = {
 
 const capturePayload: ICreatePayment = {
   amount: {
-    value: process.env.NEXT_PUBLIC_PRICE || '0.00',
+    value: process.env.PRICE || '0.00',
     currency: 'RUB',
   },
 };
@@ -147,4 +147,10 @@ export async function checkPaymentStatus(paymentId: string): Promise<any> {
     console.error('Error checking payment status:', error);
     throw error;
   }
+}
+
+export function getPrice(withCurrencySymbol = false): string {
+  const price = process.env.PRICE || '0.00';
+
+  return withCurrencySymbol ? `${price} ₽` : `${price}`;
 }

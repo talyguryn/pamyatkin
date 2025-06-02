@@ -4,14 +4,28 @@ import { Mars, Venus } from 'lucide-react';
 import { exportToPdf } from '@/utils/export';
 import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
 
-import { defaultLeafletData } from '@/data/leaflet';
 import axios from 'axios';
 import Leaflet from '@/components/leaflet';
-import { getPrice } from '@/utils/price';
 
 export default function Home() {
   const [userEmail, setUserEmail] = React.useState<string | null>(null);
   const emailInputRef = React.useRef<HTMLInputElement>(null);
+
+  const [price, setPrice] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    // fetch price from server
+    axios
+      .get('/api/get-price')
+      .then((response) => {
+        const priceData = response.data;
+        setPrice(parseFloat(priceData.price));
+      })
+      .catch((error) => {
+        console.error('Error fetching price:', error);
+        // alert('Ошибка при получении цены. Попробуйте позже.');
+      });
+  }, []);
 
   // check query parameters 'from' in url
   React.useEffect(() => {
@@ -154,10 +168,14 @@ export default function Home() {
             <button
               className="px-8 py-2 bg-[#3e6688] text-white rounded hover:bg-[#31506b] active:bg-[#2b3e4d] cursor-pointer"
               onClick={() => {
+                if (!price) {
+                  exportToPdf(document.getElementById('leaflet'));
+                  return;
+                }
                 handleBuyClick();
               }}
             >
-              Скачать ПДФ за {getPrice()} ₽
+              Скачать ПДФ {price ? `за ${price} ₽` : ''}
             </button>
             <div className="text-[#3e6688] text-xs mb-2">
               Оплачивая, вы соглашаетесь с{' '}
