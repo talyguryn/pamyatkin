@@ -7,6 +7,8 @@ import { defaultLeafletData } from '@/data/leaflet';
 
 const leafletDataLocalStorageKey = 'leafletData';
 
+const SCALE_FACTOR = 1.5; // Adjust this value to scale the leaflet
+
 export default function Leaflet() {
   // if query parameter clear is present, clear localStorage
   React.useEffect(() => {
@@ -106,7 +108,19 @@ export default function Leaflet() {
   }, []);
 
   return (
-    <div className="bg-white pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] min-h-[842px] relative">
+    <div
+      style={{
+        background: 'white',
+        paddingTop: `calc(32px * ${SCALE_FACTOR})`,
+        paddingLeft: `calc(28px * ${SCALE_FACTOR})`,
+        paddingRight: `calc(28px * ${SCALE_FACTOR})`,
+        paddingBottom: `calc(40px * ${SCALE_FACTOR})`,
+        boxShadow: '0 25px 50px -12px #3e668861',
+        width: `calc(595px * ${SCALE_FACTOR})`,
+        // minHeight: `calc(842px * ${SCALE_FACTOR})`,
+        position: 'relative',
+      }}
+    >
       <div
         className="relative"
         id="leaflet"
@@ -114,19 +128,18 @@ export default function Leaflet() {
           fontFamily: 'Arial, sans-serif',
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px',
-          // transformOrigin: 'top',
-          // transform: 'scale(1.5)',
+          gap: `calc(10px * ${SCALE_FACTOR})`,
+          minHeight: `calc((842px - 72px) * ${SCALE_FACTOR})`,
         }}
       >
         <div
           style={{
             position: 'absolute',
             left: 'auto',
-            right: '7px',
+            right: `calc(7px * ${SCALE_FACTOR})`,
             bottom: '0',
             color: '#B4B4B4',
-            fontSize: '7px',
+            fontSize: `calc(7px * ${SCALE_FACTOR})`,
             transform: 'translateX(100%) rotate(-90deg) ',
             transformOrigin: 'left',
             whiteSpace: 'nowrap',
@@ -140,7 +153,6 @@ export default function Leaflet() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            width: '100%',
           }}
         >
           <EditableDiv
@@ -158,13 +170,16 @@ export default function Leaflet() {
             placeholder={leafletData.title.placeholder}
             style={{
               fontWeight: 'bold',
-              fontSize: '32px',
+              fontSize: `calc(32px * ${SCALE_FACTOR})`,
               lineHeight: '1',
-              width: '380px',
+              width: `calc(380px * ${SCALE_FACTOR})`,
             }}
           />
           <div
-            style={{ width: '125px', height: '125px' }}
+            style={{
+              width: `calc(125px * ${SCALE_FACTOR})`,
+              height: `calc(125px * ${SCALE_FACTOR})`,
+            }}
             className="flex-shrink-0 group relative hover:cursor-pointer"
             onClick={handleImageClick}
           >
@@ -181,7 +196,16 @@ export default function Leaflet() {
             <div
               className={`${leafletData.imageSrc ? 'hidden' : 'flex'} group-hover:flex text-center absolute w-full h-full top-0 items-center justify-center bg-[#ffffffbb] border border-dashed border-[#3e668832] hover:border-[#3e668861] backdrop-blur-xs`}
             >
-              <span className="text-xs text-[#3e6688]">
+              <span
+                style={{
+                  fontSize: `calc(12px * ${SCALE_FACTOR})`,
+                  color: '#3e6688',
+                  textAlign: 'center',
+                  lineHeight: '1.2',
+                  width: '100%',
+                  userSelect: 'none',
+                }}
+              >
                 Фотография
                 <br />
                 питомца
@@ -202,8 +226,8 @@ export default function Leaflet() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              width: '380px',
-              gap: '20px',
+              width: `calc(380px * ${SCALE_FACTOR})`,
+              gap: `calc(20px * ${SCALE_FACTOR})`,
             }}
           >
             {leafletData.sections.map(
@@ -213,7 +237,7 @@ export default function Leaflet() {
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '10px',
+                    gap: `calc(10px * ${SCALE_FACTOR})`,
                   }}
                 >
                   <EditableDiv
@@ -238,7 +262,7 @@ export default function Leaflet() {
                     placeholder={section.title.placeholder}
                     style={{
                       fontWeight: 'bold',
-                      fontSize: '12px',
+                      fontSize: `calc(12px * ${SCALE_FACTOR})`,
                       lineHeight: '1',
                     }}
                   />
@@ -263,13 +287,13 @@ export default function Leaflet() {
                     contentEditable={true}
                     placeholder={section.content.placeholder}
                     style={{
-                      fontSize: '11px',
+                      fontSize: `calc(11px * ${SCALE_FACTOR})`,
                       lineHeight: '1.3',
-                      marginBottom: '4px',
+                      marginBottom: `calc(4px * ${SCALE_FACTOR})`,
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '10px',
-                      minHeight: '68px',
+                      gap: `calc(10px * ${SCALE_FACTOR})`,
+                      minHeight: `calc(68px * ${SCALE_FACTOR})`,
                     }}
                     data-focus={index === 0 ? true : undefined}
                   />
@@ -277,14 +301,22 @@ export default function Leaflet() {
               )
             )}
 
-            <div
+            <button
               style={{
                 width: '100%',
-                height: '30px',
-                borderRadius: '4px',
+                height: `calc(30px * ${SCALE_FACTOR})`,
+                borderRadius: `calc(4px * ${SCALE_FACTOR})`,
                 cursor: 'pointer',
+                background: 'none',
+                border: 'none',
+                color: '#3e6688',
+                display: 'flex',
+                alignItems: 'center',
+                gap: `calc(4px * ${SCALE_FACTOR})`,
+                fontSize: `calc(12px * ${SCALE_FACTOR})`,
+                padding: 0,
               }}
-              className="text-xs text-[#3e6688] hover:text-[#1c4c76] flex items-center gap-1"
+              className="hover:text-[#1c4c76]"
               data-hide-on-export
               onClick={() => {
                 setLeafletData((prevData) => ({
@@ -305,18 +337,20 @@ export default function Leaflet() {
                 }));
               }}
             >
-              <Plus size={15} />
+              <Plus size={15 * SCALE_FACTOR} />
               <span>Добавить блок</span>
-            </div>
+            </button>
           </div>
-          <div style={{ width: '125px', flexShrink: 0 }}>
+          <div
+            style={{ width: `calc(125px * ${SCALE_FACTOR})`, flexShrink: 0 }}
+          >
             <div
               style={{
                 display: 'flex',
-                gap: '2px',
+                gap: `calc(2px * ${SCALE_FACTOR})`,
                 justifyContent: 'start',
                 alignItems: 'stretch',
-                marginBottom: '10px',
+                marginBottom: `calc(10px * ${SCALE_FACTOR})`,
               }}
             >
               <EditableDiv
@@ -333,7 +367,7 @@ export default function Leaflet() {
                 contentEditable={true}
                 placeholder={leafletData.petName.placeholder}
                 style={{
-                  fontSize: '15px',
+                  fontSize: `calc(15px * ${SCALE_FACTOR})`,
                   lineHeight: '1',
                 }}
               />
@@ -366,18 +400,18 @@ export default function Leaflet() {
                   onChange={(e) => {}}
                 />
                 {leafletData.petSexIsMale ? (
-                  <Mars size={15} />
+                  <Mars size={15 * SCALE_FACTOR} />
                 ) : (
-                  <Venus size={15} />
+                  <Venus size={15 * SCALE_FACTOR} />
                 )}
               </div>
             </div>
 
             <div
               style={{
-                fontSize: '9px',
+                fontSize: `calc(9px * ${SCALE_FACTOR})`,
                 lineHeight: '1.3',
-                gap: '6px',
+                gap: `calc(6px * ${SCALE_FACTOR})`,
                 display: 'flex',
                 flexDirection: 'column',
               }}
@@ -389,7 +423,7 @@ export default function Leaflet() {
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '2px',
+                      gap: `calc(2px * ${SCALE_FACTOR})`,
                     }}
                   >
                     <EditableDiv
