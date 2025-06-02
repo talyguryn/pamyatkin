@@ -86,6 +86,8 @@ export async function exportToPdf(
   // console.log(`Image dimensions: ${imgWidth}x${imgHeight}`);
   // console.log(`Page dimensions: ${pageWidth}x${pageHeight}`);
 
+  let cutLineY = 0;
+
   let currentPage = 0;
   while (currentPage < totalPages) {
     const pageCanvas = document.createElement('canvas');
@@ -97,14 +99,61 @@ export async function exportToPdf(
       return;
     }
 
-    // const sourceY = currentPage * pageHeight;
-    const sourceY =
-      currentPage * (pageHeight - pagePaddings.top - pagePaddings.bottom);
-    // const drawHeight = Math.min(pageHeight, imgHeight - sourceY);
-    const drawHeight = Math.min(
+    const sourceY = cutLineY;
+
+    let drawHeight = Math.min(
       pageHeight - pagePaddings.top - pagePaddings.bottom,
       imgHeight - sourceY
     );
+
+    console.log(
+      `page ${currentPage}, predicted cut line`,
+      drawHeight + sourceY
+    );
+
+    // function to calculate the cut line position. if last line of the calculated image has not white pixels, then we need to go up for 1px and check again while we find last line with only white pixels
+    const isLineWhite = (y: number): boolean => {
+      // Use the source canvas, not the page canvas
+      const imageData = canvas
+        .getContext('2d')!
+        .getImageData(0, y, imgWidth, 1).data;
+
+      console.log(`imageData`, imageData);
+
+      for (let i = 0; i < imageData.length; i += 4) {
+        const r = imageData[i];
+        const g = imageData[i + 1];
+        const b = imageData[i + 2];
+        const a = imageData[i + 3];
+        if (a !== 0 && (r < 255 || g < 255 || b < 255)) {
+          console.log(
+            `Non-white pixel found at (${i / 4}, ${y}): rgba(${r}, ${g}, ${b}, ${a})`
+          );
+          return false;
+        }
+      }
+      return true;
+    };
+
+    const findCutLine = (y: number): number => {
+      let line = y;
+      while (line > 0 && !isLineWhite(line) && line >= cutLineY) {
+        line--;
+      }
+      return line;
+    };
+
+    // Calculate draw height with checkCutLine
+    cutLineY = findCutLine(drawHeight + sourceY);
+
+    console.log(`page ${currentPage}, calculated cut line`, cutLineY);
+
+    // recalculate drawHeight based on cutLineY
+    drawHeight = cutLineY - sourceY;
+
+    //
+
+    // cutLineY += drawHeight;
 
     // Draw the image on the canvas with padding
     ctx.fillStyle = '#ffffff'; // Set background color
