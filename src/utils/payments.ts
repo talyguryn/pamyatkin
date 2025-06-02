@@ -38,6 +38,19 @@ const createPayload: ICreatePayment = {
     type: 'redirect',
     return_url: process.env.HOST + '/?from=kassa',
   },
+  receipt: {
+    items: [
+      {
+        description: 'Создание PDF-памятки',
+        quantity: '1.00',
+        amount: {
+          value: process.env.NEXT_PUBLIC_PRICE || '0.00',
+          currency: 'RUB',
+        },
+        vat_code: 1,
+      },
+    ],
+  },
   description: 'Создание памятки',
   capture: true,
 };
