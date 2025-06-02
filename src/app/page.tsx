@@ -110,14 +110,14 @@ export default function Home() {
             >
               Очистить форму
             </button> */}
-            {/* <button
+            <button
               className="px-8 py-2 bg-white text-[#3e6688] rounded hover:bg-[#eef7ff] active:bg-[#bfd9f0] cursor-pointer"
               onClick={() => {
                 exportToPdf(document.getElementById('leaflet'));
               }}
             >
               Показать PDF
-            </button> */}
+            </button>
 
             <button
               className="px-8 py-2 bg-[#3e6688] text-white rounded hover:bg-[#31506b] active:bg-[#2b3e4d] cursor-pointer"

@@ -106,338 +106,344 @@ export default function Leaflet() {
   }, []);
 
   return (
-    <div
-      className="bg-white pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] min-h-[842px] relative"
-      id="leaflet"
-      style={{
-        fontFamily: 'Arial, sans-serif',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px',
-        // transformOrigin: 'top',
-        // transform: 'scale(1.5)',
-      }}
-    >
+    <div className="bg-white pt-[32px] px-[28px] pb-[40px] shadow-2xl shadow-[#3e668861] w-[595px] min-h-[842px] relative">
       <div
+        className="relative"
+        id="leaflet"
         style={{
-          position: 'absolute',
-          left: 'auto',
-          right: '12px',
-          bottom: '34px',
-          color: '#B4B4B4',
-          fontSize: '7px',
-          transform: 'translateX(100%) rotate(-90deg) ',
-          transformOrigin: 'left',
-          whiteSpace: 'nowrap',
-          display: 'none',
-        }}
-        data-show-on-export
-      >
-        Создано в «Памяткине», pamyatkin.ru
-      </div>
-      <div
-        style={{
+          fontFamily: 'Arial, sans-serif',
           display: 'flex',
-          justifyContent: 'space-between',
-          width: '100%',
+          flexDirection: 'column',
+          gap: '10px',
+          // transformOrigin: 'top',
+          // transform: 'scale(1.5)',
         }}
       >
-        <EditableDiv
-          value={leafletData.title.value}
-          onChange={(value) =>
-            setLeafletData((prevData) => ({
-              ...prevData,
-              title: {
-                ...prevData.title,
-                value,
-              } as LeafletTextfield,
-            }))
-          }
-          contentEditable={false}
-          placeholder={leafletData.title.placeholder}
-          style={{
-            fontWeight: 'bold',
-            fontSize: '32px',
-            lineHeight: '1',
-            width: '380px',
-          }}
-        />
         <div
-          style={{ width: '125px', height: '125px' }}
-          className="flex-shrink-0 group relative hover:cursor-pointer"
-          onClick={handleImageClick}
+          style={{
+            position: 'absolute',
+            left: 'auto',
+            right: '7px',
+            bottom: '0',
+            color: '#B4B4B4',
+            fontSize: '7px',
+            transform: 'translateX(100%) rotate(-90deg) ',
+            transformOrigin: 'left',
+            whiteSpace: 'nowrap',
+            display: 'none',
+          }}
+          data-show-on-export
         >
-          <img
-            className={leafletData.imageSrc ? 'block' : 'hidden'}
-            style={{
-              objectFit: 'cover',
-              width: '100%',
-              height: '100%',
-            }}
-            src={leafletData.imageSrc || '/cat.png'}
-            alt="Cat"
-          />
-          <div
-            className={`${leafletData.imageSrc ? 'hidden' : 'flex'} group-hover:flex text-center absolute w-full h-full top-0 items-center justify-center bg-[#ffffffbb] border border-dashed border-[#3e668832] hover:border-[#3e668861] backdrop-blur-xs`}
-          >
-            <span className="text-xs text-[#3e6688]">
-              Фотография
-              <br />
-              питомца
-            </span>
-          </div>
+          Создано в «Памяткине», pamyatkin.ru
         </div>
-      </div>
-
-      <div
-        className=""
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '100%',
-        }}
-      >
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            width: '380px',
-            gap: '20px',
+            justifyContent: 'space-between',
+            width: '100%',
           }}
         >
-          {leafletData.sections.map(
-            (section: LeafletSection, index: number) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px',
-                }}
-              >
-                <EditableDiv
-                  value={section.title.value}
-                  onChange={(value) =>
-                    setLeafletData((prevData) => {
-                      const updatedSections = [...prevData.sections];
-                      updatedSections[index] = {
-                        ...updatedSections[index],
-                        title: {
-                          ...updatedSections[index].title,
-                          value,
-                        },
-                      };
-                      return {
-                        ...prevData,
-                        sections: updatedSections,
-                      };
-                    })
-                  }
-                  contentEditable={true}
-                  placeholder={section.title.placeholder}
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: '12px',
-                    lineHeight: '1',
-                  }}
-                />
-                <EditableDiv
-                  value={section.content.value}
-                  onChange={(value) =>
-                    setLeafletData((prevData) => {
-                      const updatedSections = [...prevData.sections];
-                      updatedSections[index] = {
-                        ...updatedSections[index],
-                        content: {
-                          ...updatedSections[index].content,
-                          value,
-                        },
-                      };
-                      return {
-                        ...prevData,
-                        sections: updatedSections,
-                      };
-                    })
-                  }
-                  contentEditable={true}
-                  placeholder={section.content.placeholder}
-                  style={{
-                    fontSize: '11px',
-                    lineHeight: '1.3',
-                    marginBottom: '4px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '10px',
-                    minHeight: '68px',
-                  }}
-                  data-focus={index === 0 ? true : undefined}
-                />
-              </div>
-            )
-          )}
-
-          <div
-            style={{
-              width: '100%',
-              height: '30px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
-            className="text-xs text-[#3e6688] hover:text-[#1c4c76] flex items-center gap-1"
-            data-hide-on-export
-            onClick={() => {
+          <EditableDiv
+            value={leafletData.title.value}
+            onChange={(value) =>
               setLeafletData((prevData) => ({
                 ...prevData,
-                sections: [
-                  ...prevData.sections,
-                  {
-                    title: {
-                      value: '',
-                      placeholder: 'Заголовок',
-                    },
-                    content: {
-                      value: '',
-                      placeholder: 'Текст блока',
-                    },
-                  },
-                ],
-              }));
-            }}
-          >
-            <Plus size={15} />
-            <span>Добавить блок</span>
-          </div>
-        </div>
-        <div style={{ width: '125px', flexShrink: 0 }}>
-          <div
+                title: {
+                  ...prevData.title,
+                  value,
+                } as LeafletTextfield,
+              }))
+            }
+            contentEditable={false}
+            placeholder={leafletData.title.placeholder}
             style={{
-              display: 'flex',
-              gap: '2px',
-              justifyContent: 'start',
-              alignItems: 'stretch',
-              marginBottom: '10px',
+              fontWeight: 'bold',
+              fontSize: '32px',
+              lineHeight: '1',
+              width: '380px',
             }}
+          />
+          <div
+            style={{ width: '125px', height: '125px' }}
+            className="flex-shrink-0 group relative hover:cursor-pointer"
+            onClick={handleImageClick}
           >
-            <EditableDiv
-              value={leafletData.petName.value}
-              onChange={(value) =>
-                setLeafletData((prevData) => ({
-                  ...prevData,
-                  petName: {
-                    ...prevData.petName,
-                    value,
-                  } as LeafletTextfield,
-                }))
-              }
-              contentEditable={true}
-              placeholder={leafletData.petName.placeholder}
+            <img
+              className={leafletData.imageSrc ? 'block' : 'hidden'}
               style={{
-                fontSize: '15px',
-                lineHeight: '1',
+                objectFit: 'cover',
+                width: '100%',
+                height: '100%',
               }}
+              src={leafletData.imageSrc || '/cat.png'}
+              alt="Cat"
             />
-
             <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onClick={(e) => {
-                const checkbox = e.currentTarget.querySelector(
-                  'input[type="checkbox"]'
-                ) as HTMLInputElement;
-                if (checkbox) {
-                  checkbox.checked = !checkbox.checked;
-                  setLeafletData((prevData) => ({
-                    ...prevData,
-                    petSexIsMale: checkbox.checked,
-                  }));
-                }
-              }}
-              className="cursor-pointer"
+              className={`${leafletData.imageSrc ? 'hidden' : 'flex'} group-hover:flex text-center absolute w-full h-full top-0 items-center justify-center bg-[#ffffffbb] border border-dashed border-[#3e668832] hover:border-[#3e668861] backdrop-blur-xs`}
             >
-              <input
-                type="checkbox"
-                style={{ display: 'none' }}
-                checked={leafletData.petSexIsMale}
-                className="cursor-pointer"
-                onChange={(e) => {}}
-              />
-              {leafletData.petSexIsMale ? (
-                <Mars size={15} />
-              ) : (
-                <Venus size={15} />
-              )}
+              <span className="text-xs text-[#3e6688]">
+                Фотография
+                <br />
+                питомца
+              </span>
             </div>
           </div>
+        </div>
 
+        <div
+          className=""
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
           <div
             style={{
-              fontSize: '9px',
-              lineHeight: '1.3',
-              gap: '6px',
               display: 'flex',
               flexDirection: 'column',
+              width: '380px',
+              gap: '20px',
             }}
           >
-            {(leafletData.asideSection || []).map(
+            {leafletData.sections.map(
               (section: LeafletSection, index: number) => (
                 <div
                   key={index}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '2px',
+                    gap: '10px',
                   }}
                 >
                   <EditableDiv
                     value={section.title.value}
                     onChange={(value) =>
                       setLeafletData((prevData) => {
-                        const updatedAsideSection = [...prevData.asideSection];
-                        updatedAsideSection[index] = {
-                          ...updatedAsideSection[index],
+                        const updatedSections = [...prevData.sections];
+                        updatedSections[index] = {
+                          ...updatedSections[index],
                           title: {
-                            ...updatedAsideSection[index].title,
+                            ...updatedSections[index].title,
                             value,
                           },
                         };
                         return {
                           ...prevData,
-                          asideSection: updatedAsideSection,
+                          sections: updatedSections,
                         };
                       })
                     }
-                    contentEditable={false}
+                    contentEditable={true}
                     placeholder={section.title.placeholder}
-                    style={{}}
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: '12px',
+                      lineHeight: '1',
+                    }}
                   />
                   <EditableDiv
                     value={section.content.value}
                     onChange={(value) =>
                       setLeafletData((prevData) => {
-                        const updatedAsideSection = [...prevData.asideSection];
-                        updatedAsideSection[index] = {
-                          ...updatedAsideSection[index],
+                        const updatedSections = [...prevData.sections];
+                        updatedSections[index] = {
+                          ...updatedSections[index],
                           content: {
-                            ...updatedAsideSection[index].content,
+                            ...updatedSections[index].content,
                             value,
                           },
                         };
                         return {
                           ...prevData,
-                          asideSection: updatedAsideSection,
+                          sections: updatedSections,
                         };
                       })
                     }
                     contentEditable={true}
                     placeholder={section.content.placeholder}
-                    style={{}}
+                    style={{
+                      fontSize: '11px',
+                      lineHeight: '1.3',
+                      marginBottom: '4px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '10px',
+                      minHeight: '68px',
+                    }}
+                    data-focus={index === 0 ? true : undefined}
                   />
                 </div>
               )
             )}
+
+            <div
+              style={{
+                width: '100%',
+                height: '30px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
+              className="text-xs text-[#3e6688] hover:text-[#1c4c76] flex items-center gap-1"
+              data-hide-on-export
+              onClick={() => {
+                setLeafletData((prevData) => ({
+                  ...prevData,
+                  sections: [
+                    ...prevData.sections,
+                    {
+                      title: {
+                        value: '',
+                        placeholder: 'Заголовок',
+                      },
+                      content: {
+                        value: '',
+                        placeholder: 'Текст блока',
+                      },
+                    },
+                  ],
+                }));
+              }}
+            >
+              <Plus size={15} />
+              <span>Добавить блок</span>
+            </div>
+          </div>
+          <div style={{ width: '125px', flexShrink: 0 }}>
+            <div
+              style={{
+                display: 'flex',
+                gap: '2px',
+                justifyContent: 'start',
+                alignItems: 'stretch',
+                marginBottom: '10px',
+              }}
+            >
+              <EditableDiv
+                value={leafletData.petName.value}
+                onChange={(value) =>
+                  setLeafletData((prevData) => ({
+                    ...prevData,
+                    petName: {
+                      ...prevData.petName,
+                      value,
+                    } as LeafletTextfield,
+                  }))
+                }
+                contentEditable={true}
+                placeholder={leafletData.petName.placeholder}
+                style={{
+                  fontSize: '15px',
+                  lineHeight: '1',
+                }}
+              />
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onClick={(e) => {
+                  const checkbox = e.currentTarget.querySelector(
+                    'input[type="checkbox"]'
+                  ) as HTMLInputElement;
+                  if (checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                    setLeafletData((prevData) => ({
+                      ...prevData,
+                      petSexIsMale: checkbox.checked,
+                    }));
+                  }
+                }}
+                className="cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  style={{ display: 'none' }}
+                  checked={leafletData.petSexIsMale}
+                  className="cursor-pointer"
+                  onChange={(e) => {}}
+                />
+                {leafletData.petSexIsMale ? (
+                  <Mars size={15} />
+                ) : (
+                  <Venus size={15} />
+                )}
+              </div>
+            </div>
+
+            <div
+              style={{
+                fontSize: '9px',
+                lineHeight: '1.3',
+                gap: '6px',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              {(leafletData.asideSection || []).map(
+                (section: LeafletSection, index: number) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '2px',
+                    }}
+                  >
+                    <EditableDiv
+                      value={section.title.value}
+                      onChange={(value) =>
+                        setLeafletData((prevData) => {
+                          const updatedAsideSection = [
+                            ...prevData.asideSection,
+                          ];
+                          updatedAsideSection[index] = {
+                            ...updatedAsideSection[index],
+                            title: {
+                              ...updatedAsideSection[index].title,
+                              value,
+                            },
+                          };
+                          return {
+                            ...prevData,
+                            asideSection: updatedAsideSection,
+                          };
+                        })
+                      }
+                      contentEditable={false}
+                      placeholder={section.title.placeholder}
+                      style={{}}
+                    />
+                    <EditableDiv
+                      value={section.content.value}
+                      onChange={(value) =>
+                        setLeafletData((prevData) => {
+                          const updatedAsideSection = [
+                            ...prevData.asideSection,
+                          ];
+                          updatedAsideSection[index] = {
+                            ...updatedAsideSection[index],
+                            content: {
+                              ...updatedAsideSection[index].content,
+                              value,
+                            },
+                          };
+                          return {
+                            ...prevData,
+                            asideSection: updatedAsideSection,
+                          };
+                        })
+                      }
+                      contentEditable={true}
+                      placeholder={section.content.placeholder}
+                      style={{}}
+                    />
+                  </div>
+                )
+              )}
+            </div>
           </div>
         </div>
       </div>

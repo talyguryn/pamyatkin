@@ -57,8 +57,18 @@ export async function exportToPdf(
     },
   });
 
-  const pageWidth = canvas.width;
-  const pageHeight = canvas.width / (595 / 842); // A4 aspect ratio
+  const pagePaddings = {
+    top: 32 * SCALE,
+    left: 28 * SCALE,
+    right: 28 * SCALE,
+    bottom: 40 * SCALE,
+  };
+
+  // const pageWidth = canvas.width;
+  // const pageHeight = canvas.width / (595 / 842); // A4 aspect ratio
+
+  const pageWidth = canvas.width + pagePaddings.left + pagePaddings.right;
+  const pageHeight = pageWidth / (595 / 842); // A4 aspect ratio
 
   const pdf = new jsPDF({
     orientation: 'portrait',
@@ -86,22 +96,32 @@ export async function exportToPdf(
       console.error('Failed to get canvas context');
       return;
     }
-    const sourceY = currentPage * pageHeight;
-    const drawHeight = Math.min(pageHeight, imgHeight - sourceY);
+
+    // const sourceY = currentPage * pageHeight;
+    const sourceY =
+      currentPage * (pageHeight - pagePaddings.top - pagePaddings.bottom);
+    // const drawHeight = Math.min(pageHeight, imgHeight - sourceY);
+    const drawHeight = Math.min(
+      pageHeight - pagePaddings.top - pagePaddings.bottom,
+      imgHeight - sourceY
+    );
+
+    // Draw the image on the canvas with padding
+    ctx.fillStyle = '#ffffff'; // Set background color
+    ctx.fillRect(0, 0, pageWidth, pageHeight); // Fill the background
     ctx.drawImage(
       canvas,
       0,
       sourceY,
       imgWidth,
       drawHeight,
-      0,
-      0,
-      pageWidth,
+      pagePaddings.left,
+      pagePaddings.top,
+      imgWidth,
       drawHeight
     );
 
     // Convert the canvas to an image and add it to the PDF
-
     const pageImgData = pageCanvas.toDataURL('image/png');
     if (currentPage > 0) {
       pdf.addPage();
