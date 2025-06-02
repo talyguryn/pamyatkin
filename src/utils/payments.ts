@@ -63,8 +63,19 @@ const capturePayload: ICreatePayment = {
 };
 
 export async function createPayment(
-  payload: ICreatePayment = createPayload
+  options: { email?: string } = {}
 ): Promise<any> {
+  const payload = {
+    ...createPayload,
+    receipt: {
+      customer: {
+        email: options.email,
+      },
+    },
+  } as ICreatePayment;
+
+  console.log('Creating payment with payload:', payload);
+
   try {
     const idempotenceKey = generateIdempotenceKey();
 

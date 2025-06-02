@@ -10,6 +10,9 @@ import Leaflet from '@/components/leaflet';
 import { getPrice } from '@/utils/price';
 
 export default function Home() {
+  const [userEmail, setUserEmail] = React.useState<string | null>(null);
+  const emailInputRef = React.useRef<HTMLInputElement>(null);
+
   // check query parameters 'from' in url
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -43,7 +46,22 @@ export default function Home() {
   }, []);
 
   const handleBuyClick = async () => {
-    const paymentRequest = await axios.get('/api/kassa');
+    // Validate user email
+    if (!userEmail || !emailInputRef.current?.checkValidity()) {
+      // alert('Пожалуйста, введите корректный email для получения чека.');
+      emailInputRef.current?.focus();
+
+      // shake the input field to indicate error
+      emailInputRef.current?.classList.add('animate-shake');
+      setTimeout(() => {
+        emailInputRef.current?.classList.remove('animate-shake');
+      }, 1000);
+      return;
+    }
+
+    const paymentRequest = await axios.get(
+      '/api/kassa?email=' + encodeURIComponent(userEmail)
+    );
     if (paymentRequest.status !== 200) {
       alert('Ошибка при создании платежа. Попробуйте позже.');
       return;
@@ -110,14 +128,28 @@ export default function Home() {
             >
               Очистить форму
             </button> */}
-            <button
+            {/* <button
               className="px-8 py-2 bg-white text-[#3e6688] rounded hover:bg-[#eef7ff] active:bg-[#bfd9f0] cursor-pointer"
               onClick={() => {
                 exportToPdf(document.getElementById('leaflet'));
               }}
             >
               Показать PDF
-            </button>
+            </button> */}
+
+            {/* input field for user's email */}
+            <input
+              type="email"
+              placeholder="Email для получения чека"
+              className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#3e6688] w-full"
+              onChange={(e) => {
+                setUserEmail(e.target.value);
+              }}
+              value={userEmail || ''}
+              required
+              ref={emailInputRef}
+              autoComplete="email"
+            />
 
             <button
               className="px-8 py-2 bg-[#3e6688] text-white rounded hover:bg-[#31506b] active:bg-[#2b3e4d] cursor-pointer"
