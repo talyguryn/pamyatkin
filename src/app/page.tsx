@@ -118,7 +118,7 @@ export default function Home() {
               </div> */}
               <ol className="space-y-2 mt-1 pl-6 custom-counter">
                 <li>Загрузите фотку и данные питомца.</li>
-                <li>Отредактуруйте инструкцию.</li>
+                <li>Отредактируйте инструкцию.</li>
                 <li>Оплатите и скачайте файл для печати.</li>
               </ol>
             </div>
