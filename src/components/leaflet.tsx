@@ -9,7 +9,17 @@ const leafletDataLocalStorageKey = 'leafletData';
 
 const SCALE_FACTOR = 1.5; // Adjust this value to scale the leaflet
 
-export default function Leaflet() {
+interface LeafletProps {
+  passedLeafletData?: LeafletData | null; // Optional prop to pass leaflet data
+}
+
+export default function Leaflet(props: LeafletProps) {
+  console.log('Leaflet component rendered', props.passedLeafletData);
+
+  const initialLeafletData = props.passedLeafletData || null;
+  const [leafletData, setLeafletData] =
+    React.useState<LeafletData>(defaultLeafletData);
+
   // if query parameter clear is present, clear localStorage
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -22,13 +32,19 @@ export default function Leaflet() {
     }
   }, []);
 
-  const [leafletData, setLeafletData] =
-    React.useState<LeafletData>(defaultLeafletData);
-
   // Load from localStorage on client after mount
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem(leafletDataLocalStorageKey);
+
+      console.log('Stored leaflet data:', stored);
+      console.log('Initial leaflet data:', initialLeafletData);
+      // If initialLeafletData is provided, use it; otherwise, use stored data or default
+      if (initialLeafletData) {
+        setLeafletData(initialLeafletData);
+        return;
+      }
+
       if (stored) {
         try {
           setLeafletData(JSON.parse(stored) as LeafletData);
@@ -38,6 +54,17 @@ export default function Leaflet() {
       }
     }
   }, []);
+
+  // on rerender, if initialLeafletData is provided, update leafletData
+  React.useEffect(() => {
+    if (initialLeafletData) {
+      setLeafletData(initialLeafletData);
+      console.log(
+        'Leaflet data updated from initial prop:',
+        initialLeafletData
+      );
+    }
+  }, [initialLeafletData]);
 
   // function to change the image source by clicking on it and selecting file
   const handleImageClick = (clickEvent: React.MouseEvent<HTMLImageElement>) => {
