@@ -1,8 +1,6 @@
 'use client';
 import React from 'react';
-import { Mars, Venus } from 'lucide-react';
 import { exportToPdf } from '@/utils/export';
-import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
 
 import axios from 'axios';
 import Leaflet from '@/components/leaflet';
