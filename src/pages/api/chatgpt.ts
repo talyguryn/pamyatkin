@@ -24,7 +24,7 @@ export default async function handler(
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.AI_API_KEY}`,
+          Authorization: `Bearer ${process.env.AI_KEY}`,
         },
       }
     );
