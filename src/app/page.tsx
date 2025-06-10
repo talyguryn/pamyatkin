@@ -117,9 +117,9 @@ export default function Home() {
                 Соберите и скачайте инструкцию по уходу за домашним животным:
               </div> */}
               <ol className="space-y-2 mt-1 pl-6 custom-counter">
-                <li>Загрузите фотку и данные питомца.</li>
-                <li>Отредактируйте инструкцию.</li>
-                <li>Оплатите и скачайте файл для печати.</li>
+                <li>Загрузите фотку и данные питомца</li>
+                <li>Отредактируйте инструкцию</li>
+                <li>Оплатите и скачайте файл для печати</li>
               </ol>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function Home() {
             {/* input field for user's email */}
             <input
               type="email"
-              placeholder="Email для получения чека"
+              placeholder="Электронная почта для чека"
               className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#3e6688] w-full"
               onChange={(e) => {
                 setUserEmail(e.target.value);
@@ -178,15 +178,14 @@ export default function Home() {
               Скачать ПДФ {price ? `за ${price} ₽` : ''}
             </button>
             <div className="text-[#3e6688] text-xs mb-2">
-              Оплачивая, вы соглашаетесь с{' '}
+              Оплачивая, вы соглашаетесь{' '}
               <a
                 href="/oferta"
                 target="_blank"
                 className="text-[#3e6688] underline"
               >
-                публичной офертой
+                с публичной офертой
               </a>
-              .
             </div>
             <div className="text-[#3e6688] text-xs mt-12">
               Вопросы и пожелания:{' '}
@@ -196,11 +195,10 @@ export default function Home() {
               >
                 support@pamyatkin.ru
               </a>
-              .
             </div>
             <div className="text-xs text-gray-500 mt-2 ">
               <a href="https://bureau.ru/school/" target="_blank">
-                Сделано в Школе Бюро Горбунова в 2025 году.
+                Сделано в Школе Бюро Горбунова в 2025 году
               </a>
             </div>
           </div>

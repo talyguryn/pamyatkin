@@ -367,7 +367,7 @@ export default function Leaflet() {
                 contentEditable={true}
                 placeholder={leafletData.petName.placeholder}
                 style={{
-                  fontSize: `calc(15px * ${SCALE_FACTOR})`,
+                  fontSize: `calc(12px * ${SCALE_FACTOR})`,
                   lineHeight: '1',
                 }}
               />
