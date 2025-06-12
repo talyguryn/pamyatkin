@@ -292,6 +292,7 @@ export default function Leaflet(props: LeafletProps) {
                       fontSize: `calc(12px * ${SCALE_FACTOR})`,
                       lineHeight: '1',
                     }}
+                    className="section__title"
                   />
                   <EditableDiv
                     value={section.content.value}
@@ -323,6 +324,7 @@ export default function Leaflet(props: LeafletProps) {
                       minHeight: `calc(68px * ${SCALE_FACTOR})`,
                     }}
                     data-focus={index === 0 ? true : undefined}
+                    className="section__content"
                   />
                 </div>
               )
@@ -335,15 +337,16 @@ export default function Leaflet(props: LeafletProps) {
                 borderRadius: `calc(4px * ${SCALE_FACTOR})`,
                 cursor: 'pointer',
                 background: 'none',
-                border: 'none',
+                border: '1px dashed #3e6688',
                 color: '#3e6688',
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: `calc(4px * ${SCALE_FACTOR})`,
                 fontSize: `calc(12px * ${SCALE_FACTOR})`,
                 padding: 0,
               }}
-              className="hover:text-[#1c4c76]"
+              className="hover:text-[#1c4c76] opacity-50 hover:opacity-100"
               data-hide-on-export
               onClick={() => {
                 setLeafletData((prevData) => ({
@@ -362,10 +365,21 @@ export default function Leaflet(props: LeafletProps) {
                     },
                   ],
                 }));
+
+                setTimeout(() => {
+                  const sectionTitleElements =
+                    document.querySelectorAll('.section__title');
+                  const lastSectionTitleElement =
+                    sectionTitleElements[sectionTitleElements.length - 1];
+                  if (lastSectionTitleElement) {
+                    (lastSectionTitleElement as HTMLElement).focus();
+                    (lastSectionTitleElement as HTMLElement).scrollIntoView();
+                  }
+                }, 50);
               }}
             >
               <Plus size={15 * SCALE_FACTOR} />
-              <span>Добавить блок</span>
+              {/*<span>Добавить блок</span>*/}
             </button>
           </div>
           <div
