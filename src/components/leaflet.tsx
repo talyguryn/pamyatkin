@@ -4,6 +4,7 @@ import EditableDiv from '@/components/editableDiv';
 import { Mars, Venus, Plus } from 'lucide-react';
 import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
 import { defaultLeafletData } from '@/data/leaflet';
+import { title } from 'process';
 
 const leafletDataLocalStorageKey = 'leafletData';
 
@@ -14,8 +15,6 @@ interface LeafletProps {
 }
 
 export default function Leaflet(props: LeafletProps) {
-  console.log('Leaflet component rendered', props.passedLeafletData);
-
   const initialLeafletData = props.passedLeafletData || null;
   const [leafletData, setLeafletData] =
     React.useState<LeafletData>(defaultLeafletData);
@@ -26,7 +25,6 @@ export default function Leaflet(props: LeafletProps) {
     const clear = urlParams.get('clear');
     if (clear === 'true') {
       localStorage.removeItem(leafletDataLocalStorageKey);
-      console.log('Leaflet data cleared from localStorage');
       // Reset the leaflet data to default
       setLeafletData(defaultLeafletData);
     }
@@ -36,9 +34,6 @@ export default function Leaflet(props: LeafletProps) {
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem(leafletDataLocalStorageKey);
-
-      console.log('Stored leaflet data:', stored);
-      console.log('Initial leaflet data:', initialLeafletData);
       // If initialLeafletData is provided, use it; otherwise, use stored data or default
       if (initialLeafletData) {
         setLeafletData(initialLeafletData);
@@ -59,10 +54,6 @@ export default function Leaflet(props: LeafletProps) {
   React.useEffect(() => {
     if (initialLeafletData) {
       setLeafletData(initialLeafletData);
-      console.log(
-        'Leaflet data updated from initial prop:',
-        initialLeafletData
-      );
     }
   }, [initialLeafletData]);
 
@@ -110,7 +101,7 @@ export default function Leaflet(props: LeafletProps) {
       JSON.stringify(leafletData)
     );
 
-    console.log('Leaflet data updated:', leafletData);
+    // console.log('Leaflet data updated:', leafletData);
   }, [leafletData]);
 
   /* on paste remove all formatting from the pasted text and paste it as plain text */
@@ -285,6 +276,32 @@ export default function Leaflet(props: LeafletProps) {
                         };
                       })
                     }
+                    onKeyDown={(event: KeyboardEvent) => {
+                      if (event.key !== 'Backspace') return;
+
+                      const titleElement = document.querySelectorAll(
+                        `[data-section-title-index]`
+                      )[index] as HTMLElement;
+                      const contentElement = document.querySelectorAll(
+                        `[data-section-content-index]`
+                      )[index] as HTMLElement;
+
+                      if (
+                        !titleElement.innerText.replace(/\n/g, '') &&
+                        !contentElement.innerText.replace(/\n/g, '')
+                      ) {
+                        setLeafletData((prevData) => {
+                          const updatedSections = [...prevData.sections];
+
+                          return {
+                            ...prevData,
+                            sections: updatedSections.filter(
+                              (element, i) => i !== index
+                            ),
+                          };
+                        });
+                      }
+                    }}
                     contentEditable={true}
                     placeholder={section.title.placeholder}
                     style={{
@@ -293,6 +310,7 @@ export default function Leaflet(props: LeafletProps) {
                       lineHeight: '1',
                     }}
                     className="section__title"
+                    data-section-title-index={index}
                   />
                   <EditableDiv
                     value={section.content.value}
@@ -325,6 +343,7 @@ export default function Leaflet(props: LeafletProps) {
                     }}
                     data-focus={index === 0 ? true : undefined}
                     className="section__content"
+                    data-section-content-index={index}
                   />
                 </div>
               )
