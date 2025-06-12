@@ -189,14 +189,14 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col bg-stone-100">
+    <div className="flex flex-col bg-stone-100 relative">
       {/* two colums layout */}
       <div className="flex justify-start gap-8 px-16 py-8 mx-auto">
         {/* leaflet */}
         <div className="w-full">
           <Leaflet passedLeafletData={leafletData} />
         </div>
-        <div className="flex flex-col gap-10 w-[350px] pt-4 pb-8 flex-shrink-0 h-screen ">
+        <div className="flex flex-col gap-10 w-[350px] pt-4 pb-8 flex-shrink-0 h-full sticky top-0 z-10">
           <div>
             <div className="text-4xl font-bold text-[#3e6688] mb-2">
               Памяткин
@@ -206,8 +206,8 @@ export default function Home() {
                 Соберите и скачайте инструкцию по уходу за домашним животным:
               </div> */}
               <ol className="space-y-2 mt-1 pl-6 custom-counter">
-                <li>Загрузите фотку и данные питомца</li>
-                <li>Отредактируйте инструкцию</li>
+                <li>Заполните инструкцию</li>
+                <li>Добавьте фотку питомца и данные о нем</li>
                 <li>Оплатите и скачайте файл для печати</li>
               </ol>
             </div>
