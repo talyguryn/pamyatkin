@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 
 import './globals.css';
+import YandexMetrika from '@/components/yandexMetrika';
 
 export const metadata: Metadata = {
   title: 'Памяткин',
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="ru">
       <head>
         <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
+        <YandexMetrika />
       </head>
       <body className="antialiased">{children}</body>
     </html>
