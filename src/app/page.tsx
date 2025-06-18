@@ -288,7 +288,7 @@ export default function Home() {
             <input
               type="email"
               placeholder="Электронная почта для чека"
-              className="px-4 py-2 pb-2.5 border border-[#9C3CF0] rounded focus:outline-none focus:ring-2 focus:ring-[#9C3CF0] w-full placeholder:text-[#9C3CF0] placeholder:opacity-60"
+              className="px-4 py-2 pb-2.5 border border-[#9C3CF0]/60 rounded focus:outline-none focus:ring-1 focus:ring-[#9C3CF0]/30 w-full placeholder:text-[#9C3CF0] placeholder:opacity-60"
               onChange={(e) => {
                 setUserEmail(e.target.value);
               }}
@@ -312,11 +312,7 @@ export default function Home() {
             </button>
             <div className="text-[#9C3CF0] text-xs mb-2">
               Оплачивая, вы соглашаетесь{' '}
-              <a
-                href="/oferta"
-                target="_blank"
-                className="text-[#9C3CF0] underline"
-              >
+              <a href="/oferta" className="text-[#9C3CF0] underline">
                 с публичной офертой
               </a>
             </div>

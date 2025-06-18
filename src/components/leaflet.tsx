@@ -352,7 +352,7 @@ export default function Leaflet(props: LeafletProps) {
             <button
               style={{
                 width: '100%',
-                height: `calc(30px * ${SCALE_FACTOR})`,
+                height: `calc(90px * ${SCALE_FACTOR})`,
                 borderRadius: `calc(4px * ${SCALE_FACTOR})`,
                 cursor: 'pointer',
                 background: 'none',
@@ -392,7 +392,7 @@ export default function Leaflet(props: LeafletProps) {
                     sectionTitleElements[sectionTitleElements.length - 1];
                   if (lastSectionTitleElement) {
                     (lastSectionTitleElement as HTMLElement).focus();
-                    (lastSectionTitleElement as HTMLElement).scrollIntoView();
+                    // (lastSectionTitleElement as HTMLElement).scrollIntoView();
                   }
                 }, 50);
               }}
