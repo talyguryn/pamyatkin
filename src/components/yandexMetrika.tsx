@@ -1,6 +1,8 @@
 import Script from 'next/script';
 
-const YM_COUNTER_ID = process.env.YANDEX_METRIKA_ID as number | undefined;
+const YM_COUNTER_ID = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID as
+  | number
+  | undefined;
 
 const YandexMetrika = () => {
   return (
