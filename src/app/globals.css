@@ -1,7 +1,8 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #f5f5f4;
+  /* --background: #f5f5f4; */
+  --background: #fff5ef;
   --foreground: #000000;
 
   --scale-factor: 1.5;
@@ -40,7 +41,7 @@ a {
   text-decoration: underline;
   text-decoration-thickness: 0.01em;
   text-underline-offset: 0.5em;
-  text-decoration-color: #6a728233;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
 
   &:hover {
     text-decoration-color: inherit;
@@ -99,7 +100,7 @@ li {
   top: 0.01rem;
   width: 1.5rem;
   height: 1.5rem;
-  background-color: #345878; /* Tailwind gray-200 */
+  background-color: #9c3cf0; /* Tailwind gray-200 */
   border-radius: 9999px;
   color: #fff;
   text-align: center;

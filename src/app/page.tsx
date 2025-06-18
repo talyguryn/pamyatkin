@@ -188,7 +188,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col bg-stone-100">
+    <div className="flex flex-col">
       {/* two colums layout */}
       <div className="flex justify-start gap-8 px-16 py-8 mx-auto relative">
         {/* leaflet */}
@@ -197,10 +197,10 @@ export default function Home() {
         </div>
         <div className="flex flex-col gap-10 w-[350px] pt-4 pb-8 flex-shrink-0 h-full sticky top-0 z-10">
           <div>
-            <div className="text-4xl font-bold text-[#3e6688] mb-2">
+            <div className="text-4xl font-bold text-[#9C3CF0] mb-2">
               Памяткин
             </div>
-            <div className="text-[#3e6688]">
+            <div className="text-[#9C3CF0]">
               <ol className="space-y-2 mt-1 pl-6 custom-counter">
                 <li>Заполните инструкцию</li>
                 <li>Добавьте фотку питомца и данные о нем</li>
@@ -235,7 +235,7 @@ export default function Home() {
             >
               Показать PDF
             </button> */}
-            <button
+            {/* <button
               className="mb-2 px-8 py-2 bg-gradient-to-br from-purple-600 to-blue-900 text-white rounded hover:from-purple-700 hover:to-blue-950 active:from-purple-800 active:to-blue-950 cursor-pointer"
               onClick={async () => {
                 if (isAiThinking) return;
@@ -282,13 +282,13 @@ export default function Home() {
               }}
             >
               {isAiThinking2 ? <Loader /> : 'Пересобрать памятку из вашей'}
-            </button>
+            </button> */}
 
             {/* input field for user's email */}
             <input
               type="email"
               placeholder="Электронная почта для чека"
-              className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#3e6688] w-full"
+              className="px-4 py-2 pb-2.5 border border-[#9C3CF0] rounded focus:outline-none focus:ring-2 focus:ring-[#9C3CF0] w-full placeholder:text-[#9C3CF0] placeholder:opacity-60"
               onChange={(e) => {
                 setUserEmail(e.target.value);
               }}
@@ -299,7 +299,7 @@ export default function Home() {
             />
 
             <button
-              className="px-8 py-2 bg-[#3e6688] text-white rounded hover:bg-[#31506b] active:bg-[#2b3e4d] cursor-pointer"
+              className="px-8 py-2 bg-[#9C3CF0] text-white rounded hover:bg-[#8c2ae1] active:bg-[#6f1bb9] cursor-pointer"
               onClick={() => {
                 if (!price) {
                   exportToPdf(document.getElementById('leaflet'));
@@ -310,26 +310,26 @@ export default function Home() {
             >
               Скачать ПДФ {price ? `за ${price} ₽` : ''}
             </button>
-            <div className="text-[#3e6688] text-xs mb-2">
+            <div className="text-[#9C3CF0] text-xs mb-2">
               Оплачивая, вы соглашаетесь{' '}
               <a
                 href="/oferta"
                 target="_blank"
-                className="text-[#3e6688] underline"
+                className="text-[#9C3CF0] underline"
               >
                 с публичной офертой
               </a>
             </div>
-            <div className="text-[#3e6688] text-xs mt-12">
+            <div className="text-[#9C3CF0] text-xs mt-12">
               Вопросы и пожелания:{' '}
               <a
                 href="mailto:support@pamyatkin.ru"
-                className="text-[#3e6688] underline"
+                className="text-[#9C3CF0] underline"
               >
                 support@pamyatkin.ru
               </a>
             </div>
-            <div className="text-xs text-gray-500 mt-2 ">
+            <div className="text-xs text-gray-400 mt-2 ">
               <a href="https://bureau.ru/school/" target="_blank">
                 Сделано в Школе Бюро Горбунова в 2025 году
               </a>
