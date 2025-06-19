@@ -239,7 +239,7 @@ export default function Home() {
             >
               Показать PDF
             </button> */}
-            {/* <button
+            <button
               className="mb-2 px-8 py-2 bg-gradient-to-br from-purple-600 to-blue-900 text-white rounded hover:from-purple-700 hover:to-blue-950 active:from-purple-800 active:to-blue-950 cursor-pointer"
               onClick={async () => {
                 if (isAiThinking) return;
@@ -286,7 +286,7 @@ export default function Home() {
               }}
             >
               {isAiThinking2 ? <Loader /> : 'Пересобрать памятку из вашей'}
-            </button> */}
+            </button>
 
             {/* input field for user's email */}
             <input
