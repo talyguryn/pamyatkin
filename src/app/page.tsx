@@ -198,7 +198,11 @@ export default function Home() {
         <div className="flex flex-col gap-10 w-[350px] pt-4 pb-8 flex-shrink-0 h-full sticky top-0 z-10">
           <div>
             <div className="text-4xl font-bold text-[#9C3CF0] mb-2">
-              Памяткин
+              <img
+                src="/logo.svg"
+                alt="Памятка"
+                className="h-10 inline-block mr-2"
+              />
             </div>
             <div className="text-[#9C3CF0]">
               <ol className="space-y-2 mt-1 pl-6 custom-counter">
