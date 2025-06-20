@@ -3,10 +3,12 @@ import React from 'react';
 import { exportToPdf } from '@/utils/export';
 
 import axios from 'axios';
-import Leaflet from '@/components/leaflet';
+import Leaflet, { leafletDataLocalStorageKey } from '@/components/leaflet';
 import { askAi } from '@/utils/ask-ai';
 import { LeafletData } from '@/types/leaflet';
 import Loader from '@/components/loader';
+
+import { defaultLeafletData } from '@/data/leaflet';
 
 export default function Home() {
   const [userEmail, setUserEmail] = React.useState<string | null>(null);
@@ -196,6 +198,26 @@ export default function Home() {
         {/* leaflet */}
         <div className="w-full">
           <Leaflet passedLeafletData={leafletData} />
+
+          <div className="flex justify-between items-center mt-6 mb-8">
+            <button
+              className="text-gray-500 rounded cursor-pointer underline decoration-dashed decoration-[0.01em] underline-offset-[0.5em] [text-decoration-color:color-mix(in_srgb,_currentColor_40%,_transparent)] hover:[text-decoration-color:inherit] ml-10"
+              onClick={() => {
+                if (
+                  !confirm(
+                    'Вы уверены, что хотите очистить памятку? Все данные будут потеряны.'
+                  )
+                ) {
+                  return;
+                }
+
+                setLeafletData(defaultLeafletData);
+                localStorage.removeItem(leafletDataLocalStorageKey);
+              }}
+            >
+              Очистить памятку и начать сначала
+            </button>
+          </div>
         </div>
         <div className="flex flex-col gap-10 w-[350px] pt-4 pb-8 flex-shrink-0 h-full sticky top-0 z-10">
           <div>
@@ -216,23 +238,6 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-2">
-            {/* <button
-              className="px-8 py-2 bg-white text-[#883e3e] rounded hover:bg-[#ffeeee] active:bg-[#f0bfbf] cursor-pointer"
-              onClick={() => {
-                if (
-                  !confirm(
-                    'Вы уверены, что хотите очистить форму? Все данные будут потеряны.'
-                  )
-                ) {
-                  return;
-                }
-
-                setLeafletData(defaultLeafletData);
-                localStorage.removeItem(leafletDataLocalStorageKey);
-              }}
-            >
-              Очистить форму
-            </button> */}
             {/* <button
               className="px-8 py-2 bg-white text-[#3e6688] rounded hover:bg-[#eef7ff] active:bg-[#bfd9f0] cursor-pointer"
               onClick={() => {

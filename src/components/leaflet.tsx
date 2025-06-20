@@ -4,9 +4,8 @@ import EditableDiv from '@/components/editableDiv';
 import { Mars, Venus, Plus } from 'lucide-react';
 import { LeafletData, LeafletSection, LeafletTextfield } from '@/types/leaflet';
 import { defaultLeafletData } from '@/data/leaflet';
-import { title } from 'process';
 
-const leafletDataLocalStorageKey = 'leafletData';
+export const leafletDataLocalStorageKey = 'leafletData';
 
 const SCALE_FACTOR = 1.5; // Adjust this value to scale the leaflet
 
