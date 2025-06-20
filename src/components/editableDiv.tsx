@@ -55,6 +55,7 @@ export default function EditableDiv({
       onBlur={handleBlur}
       suppressContentEditableWarning
       data-placeholder={placeholder}
+      spellCheck="false"
       {...restProps}
     />
   );
