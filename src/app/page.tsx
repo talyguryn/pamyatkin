@@ -66,6 +66,26 @@ export default function Home() {
     }
   }, []);
 
+  const handleAiClick = async () => {
+    if (isAiThinking) return;
+
+    const userInput = prompt(
+      'Расскажите о питомце: "Порода, возраст, кличка, особенности поведения, предпочтения в питании и т.д."'
+    );
+
+    if (!userInput) return;
+
+    setIsAiThinking(true);
+
+    await callAi({
+      systemMessage:
+        'Ты — помощник по уходу за домашними животными и опытный редактор. Помоги пользователю составить инструкцию по уходу за питомцем на темы: подготовка дома, первый день дома, питание, отдых, гигиена, прогулки, прививки, дрессировка, любые дополнительные разделы при необходимости. Заполни поля ответа полезной информацией. Где не хватает информации либо придумай, либо оставь пустым. Напиши достаточное количество информации, чтобы пользователю не пришлось искать ответы на основные вопросы в чатах или интернете. Пользователь поделится данными о питомце, которые у него есть.',
+      userMessage: userInput,
+    });
+
+    setIsAiThinking(false);
+  };
+
   const handleBuyClick = async () => {
     // Validate user email
     if (!userEmail || !emailInputRef.current?.checkValidity()) {
@@ -201,7 +221,7 @@ export default function Home() {
 
           <div className="flex justify-between items-center mt-6 mb-8">
             <button
-              className="text-gray-500 rounded cursor-pointer underline decoration-dashed decoration-[0.01em] underline-offset-[0.5em] [text-decoration-color:color-mix(in_srgb,_currentColor_40%,_transparent)] hover:[text-decoration-color:inherit] ml-10"
+              className="text-gray-500 cursor-pointer underline decoration-dashed decoration-[0.01em] underline-offset-[0.5em] [text-decoration-color:color-mix(in_srgb,_currentColor_40%,_transparent)] hover:[text-decoration-color:inherit] ml-10"
               onClick={() => {
                 if (
                   !confirm(
@@ -230,7 +250,25 @@ export default function Home() {
             </div>
             <div className="text-[#9C3CF0]">
               <ol className="space-y-2 mt-1 pl-6 custom-counter">
-                <li>Заполните инструкцию</li>
+                <li>
+                  {isAiThinking ? (
+                    <>
+                      <span>
+                        Подождите, ИИ составляет памятку <Loader />
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      Заполните инструкцию или 
+                      <span
+                        onClick={handleAiClick}
+                        className="cursor-pointer underline decoration-dashed decoration-[0.01em] underline-offset-[0.5em] [text-decoration-color:color-mix(in_srgb,_currentColor_40%,_transparent)] hover:[text-decoration-color:inherit]"
+                      >
+                        попросите ИИ помочь
+                      </span>
+                    </>
+                  )}
+                </li>
                 <li>Добавьте фотку питомца и данные о нем</li>
                 <li>Оплатите и скачайте файл для печати</li>
               </ol>
@@ -246,54 +284,6 @@ export default function Home() {
             >
               Показать PDF
             </button> */}
-            <button
-              className="mb-2 px-8 py-2 bg-gradient-to-br from-purple-600 to-blue-900 text-white rounded hover:from-purple-700 hover:to-blue-950 active:from-purple-800 active:to-blue-950 cursor-pointer"
-              onClick={async () => {
-                if (isAiThinking) return;
-
-                const userInput = prompt(
-                  'Расскажите о питомце: "Порода, возраст, кличка, особенности поведения, предпочтения в питании и т.д."'
-                );
-
-                if (!userInput) return;
-
-                setIsAiThinking(true);
-
-                await callAi({
-                  systemMessage:
-                    'Ты — помощник по уходу за домашними животными. Помоги составить инструкцию по уходу за питомцем на темы: подготовка дома, первый день дома, питание, отдых, гигиена, прогулки, прививки, дрессировка, любые дополнительные разделы при необходимости. Заполни поля ответа полезной информацией. Где не хватает информации либо придумай, либо оставь пустым. Напиши достаточно большое количество информации, чтобы пользователю не пришлось искать ответы на основные вопросы в чатах или интернете.',
-                  userMessage: userInput,
-                });
-
-                setIsAiThinking(false);
-              }}
-            >
-              {isAiThinking ? <Loader /> : 'Сгенерировать с помощью ИИ'}
-            </button>
-            <button
-              className="mb-20 px-8 py-2 bg-gradient-to-br from-purple-600 to-blue-900 text-white rounded hover:from-purple-700 hover:to-blue-950 active:from-purple-800 active:to-blue-950 cursor-pointer"
-              onClick={async () => {
-                if (isAiThinking2) return;
-
-                const userInput = prompt(
-                  'Вставьте сюда текст инструкции, которая у вас уже есть'
-                );
-
-                if (!userInput) return;
-
-                setIsAiThinking2(true);
-
-                await callAi({
-                  systemMessage:
-                    'Ты — помощник по уходу за домашними животными и опытный редактор. Помоги на базе инструкции от пользователя составить памятку по уходу за питомцем на темы: подготовка дома, первый день дома, питание, отдых, гигиена, прогулки, прививки, дрессировка, любые дополнительные разделы при необходимости. Перефразируй тексты, чтобы упростить их, но сохранить смысл',
-                  userMessage: userInput,
-                });
-
-                setIsAiThinking2(false);
-              }}
-            >
-              {isAiThinking2 ? <Loader /> : 'Пересобрать памятку из вашей'}
-            </button>
 
             {/* input field for user's email */}
             <input
