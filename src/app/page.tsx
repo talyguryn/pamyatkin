@@ -29,7 +29,6 @@ export default function Home() {
       })
       .catch((error) => {
         console.error('Error fetching price:', error);
-        // alert('Ошибка при получении цены. Попробуйте позже.');
       });
   }, []);
 
@@ -116,7 +115,7 @@ export default function Home() {
 
     const composedSystemMessage = `${systemMessage}
 
-    Output valid JSON only. No text, no markdown, just the raw JSON. I will parse this programmatically. Please return just the JSON object, starting with { and ending with }. No extra formatting. Important: DO NOT include \`\`\`json or any other explanation. Only return the raw JSON. This will be parsed directly by a script. Все текстовые поля заполняй без дополнительной разметки и списков, но используй переносы строк, если это необходимо. Нужен готовый к использованию JSON. Формат JSON должен соответствовать следующему шаблону:
+    Output valid JSON only. No text, no markdown, just the raw JSON. I will parse this programmatically. Please return just the JSON object, starting with { and ending with }. No extra formatting. Important: DO NOT include \`\`\`json or any other explanation. Only return the raw JSON. This will be parsed directly by a script. Keep JSON keys placed in quotes. Все текстовые поля заполняй без дополнительной разметки и списков, но используй переносы строк, если это необходимо. Нужен готовый к использованию JSON. Формат JSON должен соответствовать следующему шаблону:
       {
           title: {
   value?: "Инструкция\\nпо уходу";
@@ -168,6 +167,9 @@ export default function Home() {
         }
         if (response.endsWith('```')) {
           response = response.slice(0, -3);
+        }
+        if (response.endsWith(';')) {
+          response = response.slice(0, -1);
         }
 
         // remove any leading/trailing whitespace and \n characters

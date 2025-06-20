@@ -154,8 +154,8 @@ export default function Leaflet(props: LeafletProps) {
           style={{
             position: 'absolute',
             left: 'auto',
-            right: `calc(7px * ${SCALE_FACTOR})`,
-            bottom: '0',
+            right: `calc(4px * ${SCALE_FACTOR})`,
+            top: `calc((842px - 72px - 10px) * ${SCALE_FACTOR})`,
             color: '#B4B4B4',
             fontSize: `calc(7px * ${SCALE_FACTOR})`,
             transform: 'translateX(100%) rotate(-90deg) ',

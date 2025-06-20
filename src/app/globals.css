@@ -27,7 +27,7 @@ body {
     content: attr(data-placeholder);
     pointer-events: none;
     display: block; /* For Firefox */
-    color: #bcbcbc; /* Placeholder color */
+    color: #d7d7d7; /* Placeholder color */
   }
 
   &:focus {
